@@ -1,5 +1,5 @@
 """config/settings.py - identity + constants for the combined dashboard."""
-APP_NAME = "BISE Results"
+APP_NAME = "Pakistan-BISE-Examination-Results-Dashboard"
 APP_SUBTITLE = "9th-12th Combined Dashboard"
 APP_ICON = "school"
 PAGE_ICON = "🎓"
