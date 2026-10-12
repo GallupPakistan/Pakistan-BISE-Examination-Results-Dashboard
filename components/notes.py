@@ -39,6 +39,6 @@ def render_important_points():
             "- Split tables (gender, group, category) are used only where they add up to the board's reported total.\n\n"
             "**Special cases**\n"
             "- 11th Mardan and Bannu 2025 report *promoted* results (not pass/fail), so pass % is near 99%.\n"
-            "- 9th has 2025-26 only, 11th has 2024-25 only, so some cross-class charts show fewer classes for 2026 or 2024.\n"
+            "- 9th has 2024-26 for all boards except Bannu (its 2024 9th results were promoted, with no pass counts), 11th has 2024-25 only, so some cross-class charts show fewer classes for 2026 or 2024.\n"
             "- Source: official BISE result gazettes, in the class workbooks in `data/source/`."
         )

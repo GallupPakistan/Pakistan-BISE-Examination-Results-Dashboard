@@ -30,10 +30,7 @@ def one(title, sub, fig):
         st.plotly_chart(fig, width="stretch")
 
 boot("Class Comparison", "Compare 9th, 10th, 11th and 12th class results: classes, boards, provinces, years.")
-from components.page_header import render_page_header
-from config.settings import DEFAULT_YEAR
-year = render_page_header("Select Year to Compare Classes", year_options=[2026, 2025, 2024],
-                          year_default=DEFAULT_YEAR, key="cc_year")
+year, _ = year_and_class("cc", title="Select Year to Compare Classes")
 other = prev_year(year)
 prov = render_filter_bar("Province", ["All Provinces"] + list(PROVINCE_BOARD_MAP), default="All Provinces", key="cc_prov") or "All Provinces"
 full = load("overall")

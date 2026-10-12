@@ -33,6 +33,11 @@ Class,Board,Year,Group,Appeared,Passed,Stream
 11th,Abbottabad,2025,Humanities,15363,9333,Humanities
 11th,Abbottabad,2025,Pre-Engineering,3320,1594,Science
 11th,Abbottabad,2025,Pre-Medical,19380,13619,Science
+11th,Abbottabad,2026,General Science,10885,6182,Science
+11th,Abbottabad,2026,Home Economics,6,4,Other
+11th,Abbottabad,2026,Humanities,13583,8351,Humanities
+11th,Abbottabad,2026,Pre-Engineering,3060,1688,Science
+11th,Abbottabad,2026,Pre-Medical,19483,13267,Science
 11th,Bahawalpur,2024,Commerce,241,119,Commerce
 11th,Bahawalpur,2024,General Science,15053,8010,Science
 11th,Bahawalpur,2024,Humanities,20734,8054,Humanities
@@ -43,6 +48,10 @@ Class,Board,Year,Group,Appeared,Passed,Stream
 11th,Bahawalpur,2025,Humanities,22033,9456,Humanities
 11th,Bahawalpur,2025,Pre-Engineering,1821,1245,Science
 11th,Bahawalpur,2025,Pre-Medical,14369,8895,Science
+11th,Bannu,2026,General Science,3905,3247,Science
+11th,Bannu,2026,Humanities,3630,2790,Humanities
+11th,Bannu,2026,Pre-Engineering,1652,1391,Science
+11th,Bannu,2026,Pre-Medical,8670,7417,Science
 11th,DG Khan,2024,General Science,11716,7331,Science
 11th,DG Khan,2024,Humanities,14990,7901,Humanities
 11th,DG Khan,2024,Pre-Engineering,2026,1432,Science
@@ -80,6 +89,10 @@ Class,Board,Year,Group,Appeared,Passed,Stream
 11th,Kohat,2025,Humanities,5094,1720,Humanities
 11th,Kohat,2025,Pre-Engineering,2052,436,Science
 11th,Kohat,2025,Pre-Medical,19185,7031,Science
+11th,Kohat,2026,General Science,5561,864,Science
+11th,Kohat,2026,Humanities,3386,1490,Humanities
+11th,Kohat,2026,Pre-Engineering,1298,317,Science
+11th,Kohat,2026,Pre-Medical,12483,3467,Science
 11th,Lahore,2024,Commerce,12421,6337,Commerce
 11th,Lahore,2024,General Science,53436,27563,Science
 11th,Lahore,2024,Humanities,53996,23512,Humanities
@@ -373,10 +386,14 @@ Class,Board,Year,Group,Appeared,Passed,Stream
 12th,Swat,2026,Humanities,4493,1871,Humanities
 12th,Swat,2026,Pre-Engineering,1467,813,Science
 12th,Swat,2026,Pre-Medical,24080,17385,Science
+9th,Abbottabad,2024,Humanities,18965,8056,Humanities
+9th,Abbottabad,2024,Science,52471,36592,Science
 9th,Abbottabad,2025,Humanities,19284,7091,Humanities
 9th,Abbottabad,2025,Science,54175,36678,Science
 9th,Abbottabad,2026,Humanities,17459,7857,Humanities
 9th,Abbottabad,2026,Science,54908,38362,Science
+9th,Bahawalpur,2024,Humanities,11835,5116,Humanities
+9th,Bahawalpur,2024,Science,94082,41526,Science
 9th,Bahawalpur,2025,Humanities,12223,5041,Humanities
 9th,Bahawalpur,2025,Science,98214,42533,Science
 9th,Bahawalpur,2026,Humanities,14051,3098,Humanities
@@ -385,38 +402,56 @@ Class,Board,Year,Group,Appeared,Passed,Stream
 9th,Bannu,2025,Science,26064,19020,Science
 9th,Bannu,2026,Humanities,3237,1840,Humanities
 9th,Bannu,2026,Science,27791,21795,Science
+9th,DG Khan,2024,Humanities,4337,2209,Humanities
+9th,DG Khan,2024,Science,99911,52822,Science
 9th,DG Khan,2025,Humanities,4495,2365,Humanities
 9th,DG Khan,2025,Science,101359,58333,Science
 9th,DG Khan,2026,Humanities,4904,1145,Humanities
 9th,DG Khan,2026,Science,101097,49936,Science
+9th,FBISE,2024,Humanities,16060,6625,Humanities
+9th,FBISE,2024,Science,127112,77426,Science
 9th,FBISE,2025,Humanities,16798,9428,Humanities
 9th,FBISE,2025,Science,127758,80454,Science
 9th,FBISE,2026,Humanities,15993,3482,Humanities
 9th,FBISE,2026,Science,132318,85164,Science
+9th,Faisalabad,2024,Humanities,39936,15263,Humanities
+9th,Faisalabad,2024,Science,154178,77947,Science
 9th,Faisalabad,2025,Humanities,39791,17503,Humanities
 9th,Faisalabad,2025,Science,165237,88122,Science
 9th,Faisalabad,2026,Humanities,39971,11268,Humanities
 9th,Faisalabad,2026,Science,150892,86991,Science
+9th,Gujranwala,2024,Humanities,67495,29594,Humanities
+9th,Gujranwala,2024,Science,189150,91926,Science
 9th,Gujranwala,2025,Humanities,70864,32767,Humanities
 9th,Gujranwala,2025,Science,200451,101130,Science
 9th,Gujranwala,2026,Humanities,72244,20839,Humanities
 9th,Gujranwala,2026,Science,169137,91805,Science
+9th,Kohat,2024,Humanities,5379,3067,Humanities
+9th,Kohat,2024,Science,44119,36283,Science
 9th,Kohat,2025,Humanities,5244,1724,Humanities
 9th,Kohat,2025,Science,46515,19765,Science
 9th,Kohat,2026,Humanities,4465,1193,Humanities
 9th,Kohat,2026,Science,41471,12826,Science
+9th,Lahore,2024,Humanities,67419,23747,Humanities
+9th,Lahore,2024,Science,219579,104089,Science
 9th,Lahore,2025,Humanities,72826,27213,Humanities
 9th,Lahore,2025,Science,235247,111681,Science
 9th,Lahore,2026,Humanities,70761,16228,Humanities
 9th,Lahore,2026,Science,203844,111802,Science
+9th,Mardan,2024,Humanities,24531,12244,Humanities
+9th,Mardan,2024,Science,54222,42895,Science
 9th,Mardan,2025,Humanities,23353,23005,Humanities
 9th,Mardan,2025,Science,59313,58997,Science
 9th,Mardan,2026,Humanities,21172,20858,Humanities
 9th,Mardan,2026,Science,61293,60911,Science
+9th,Peshawar,2024,Humanities,19839,19433,Humanities
+9th,Peshawar,2024,Science,75214,74616,Science
 9th,Peshawar,2025,Humanities,18577,18110,Humanities
 9th,Peshawar,2025,Science,83311,82550,Science
 9th,Peshawar,2026,Humanities,16662,16320,Humanities
 9th,Peshawar,2026,Science,81288,80630,Science
+9th,Rawalpindi,2024,Humanities,26704,11019,Humanities
+9th,Rawalpindi,2024,Science,97086,45730,Science
 9th,Rawalpindi,2025,Humanities,26146,10850,Humanities
 9th,Rawalpindi,2025,Science,99843,42807,Science
 9th,Rawalpindi,2026,Humanities,27558,5787,Humanities
@@ -425,9 +460,13 @@ Class,Board,Year,Group,Appeared,Passed,Stream
 9th,Sahiwal,2025,Science,80133,37353,Science
 9th,Sahiwal,2026,Humanities,15464,2769,Humanities
 9th,Sahiwal,2026,Science,66719,32959,Science
+9th,Sargodha,2024,Humanities,18780,8293,Humanities
+9th,Sargodha,2024,Science,88620,38874,Science
 9th,Sargodha,2025,Humanities,19591,8304,Humanities
 9th,Sargodha,2025,Science,92816,43778,Science
 9th,Sargodha,2026,Humanities,21482,5601,Humanities
 9th,Sargodha,2026,Science,81729,38738,Science
+9th,Swat,2024,Humanities,5853,1576,Humanities
+9th,Swat,2024,Science,44470,24446,Science
 9th,Swat,2026,Humanities,4203,1037,Humanities
 9th,Swat,2026,Science,45842,23771,Science

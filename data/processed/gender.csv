@@ -89,10 +89,14 @@ Class,Board,Year,Gender,Appeared,Passed
 11th,Abbottabad,2024,Male,23755.0,16714.0
 11th,Abbottabad,2025,Female,20679.0,14828.0
 11th,Abbottabad,2025,Male,26940.0,15085.0
+11th,Abbottabad,2026,Female,21034.0,15404.0
+11th,Abbottabad,2026,Male,25983.0,14088.0
 11th,Bahawalpur,2024,Female,29545.0,18016.0
 11th,Bahawalpur,2024,Male,22313.0,9384.0
 11th,Bahawalpur,2025,Female,32719.0,19642.0
 11th,Bahawalpur,2025,Male,23669.0,10339.0
+11th,Bannu,2026,Female,4493.0,3930.0
+11th,Bannu,2026,Male,13364.0,10915.0
 11th,DG Khan,2024,Female,24780.0,17680.0
 11th,DG Khan,2024,Male,25594.0,14664.0
 11th,DG Khan,2025,Female,27245.0,19141.0
@@ -111,6 +115,8 @@ Class,Board,Year,Gender,Appeared,Passed
 11th,Gujranwala,2025,Male,49343.0,17706.0
 11th,Kohat,2025,Female,10135.0,6262.0
 11th,Kohat,2025,Male,23877.0,4637.0
+11th,Kohat,2026,Female,8666.0,3423.0
+11th,Kohat,2026,Male,14062.0,2715.0
 11th,Lahore,2024,Female,95449.0,56224.0
 11th,Lahore,2024,Male,67235.0,28561.0
 11th,Lahore,2025,Female,101629.0,62735.0
@@ -219,10 +225,14 @@ Class,Board,Year,Gender,Appeared,Passed
 12th,Swat,2025,Male,21946.0,17088.0
 12th,Swat,2026,Female,10784.0,8686.0
 12th,Swat,2026,Male,21747.0,12497.0
+9th,Abbottabad,2024,Female,29035.0,17617.0
+9th,Abbottabad,2024,Male,42401.0,27031.0
 9th,Abbottabad,2025,Female,29889.0,18230.0
 9th,Abbottabad,2025,Male,43570.0,25539.0
 9th,Abbottabad,2026,Female,29955.0,17921.0
 9th,Abbottabad,2026,Male,42412.0,28298.0
+9th,Bahawalpur,2024,Female,52637.0,28948.0
+9th,Bahawalpur,2024,Male,53280.0,17694.0
 9th,Bahawalpur,2025,Female,55028.0,28491.0
 9th,Bahawalpur,2025,Male,55409.0,19083.0
 9th,Bahawalpur,2026,Female,53101.0,25143.0
@@ -231,34 +241,50 @@ Class,Board,Year,Gender,Appeared,Passed
 9th,Bannu,2025,Male,23159.0,15785.0
 9th,Bannu,2026,Female,7444.0,6467.0
 9th,Bannu,2026,Male,23584.0,17168.0
+9th,DG Khan,2024,Female,46188.0,28612.0
+9th,DG Khan,2024,Male,58060.0,26419.0
 9th,DG Khan,2025,Female,48119.0,31272.0
 9th,DG Khan,2025,Male,57735.0,29426.0
 9th,DG Khan,2026,Female,49348.0,27731.0
 9th,DG Khan,2026,Male,56653.0,23350.0
+9th,FBISE,2024,Female,68163.0,44547.0
+9th,FBISE,2024,Male,75009.0,39504.0
 9th,FBISE,2025,Female,70163.0,48518.0
 9th,FBISE,2025,Male,74393.0,41364.0
 9th,FBISE,2026,Female,71859.0,46384.0
 9th,FBISE,2026,Male,76452.0,42262.0
+9th,Gujranwala,2024,Female,144324.0,81170.0
+9th,Gujranwala,2024,Male,112494.0,40503.0
 9th,Gujranwala,2025,Female,150793.0,88798.0
 9th,Gujranwala,2025,Male,120670.0,45236.0
 9th,Gujranwala,2026,Female,141203.0,76441.0
 9th,Gujranwala,2026,Male,108149.0,39525.0
+9th,Kohat,2024,Female,14199.0,11592.0
+9th,Kohat,2024,Male,35299.0,27758.0
 9th,Kohat,2025,Female,14972.0,9368.0
 9th,Kohat,2025,Male,36787.0,12121.0
 9th,Kohat,2026,Female,14319.0,7150.0
 9th,Kohat,2026,Male,31617.0,6869.0
+9th,Lahore,2024,Female,150967.0,79889.0
+9th,Lahore,2024,Male,136031.0,47947.0
 9th,Lahore,2025,Female,162039.0,87298.0
 9th,Lahore,2025,Male,146034.0,51596.0
 9th,Lahore,2026,Female,150882.0,82410.0
 9th,Lahore,2026,Male,129794.0,48133.0
+9th,Mardan,2024,Female,29975.0,23109.0
+9th,Mardan,2024,Male,48778.0,32030.0
 9th,Mardan,2025,Female,31255.0,31022.0
 9th,Mardan,2025,Male,51411.0,50980.0
 9th,Mardan,2026,Female,32264.0,31988.0
 9th,Mardan,2026,Male,50201.0,49781.0
+9th,Peshawar,2024,Female,32511.0,32244.0
+9th,Peshawar,2024,Male,62542.0,61805.0
 9th,Peshawar,2025,Female,35017.0,34669.0
 9th,Peshawar,2025,Male,66871.0,65991.0
 9th,Peshawar,2026,Female,35199.0,34868.0
 9th,Peshawar,2026,Male,62751.0,62082.0
+9th,Rawalpindi,2024,Female,62501.0,35525.0
+9th,Rawalpindi,2024,Male,61289.0,21224.0
 9th,Rawalpindi,2025,Female,63357.0,34114.0
 9th,Rawalpindi,2025,Male,62632.0,19543.0
 9th,Rawalpindi,2026,Female,63018.0,29288.0
@@ -267,6 +293,8 @@ Class,Board,Year,Gender,Appeared,Passed
 9th,Sahiwal,2025,Male,47933.0,18585.0
 9th,Sahiwal,2026,Female,45414.0,23039.0
 9th,Sahiwal,2026,Male,41679.0,14764.0
+9th,Sargodha,2024,Female,50274.0,27264.0
+9th,Sargodha,2024,Male,57249.0,20024.0
 9th,Sargodha,2025,Female,52482.0,29634.0
 9th,Sargodha,2025,Male,60010.0,22532.0
 9th,Sargodha,2026,Female,52619.0,26301.0

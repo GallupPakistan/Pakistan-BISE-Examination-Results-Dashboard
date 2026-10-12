@@ -149,10 +149,14 @@ Class,Board,Year,Category,Appeared,Passed
 12th,Swat,2025,Regular,26906,22119
 12th,Swat,2026,Private,4631,3024
 12th,Swat,2026,Regular,27900,18159
+9th,Abbottabad,2024,Private,4386,1522
+9th,Abbottabad,2024,Regular,67050,43126
 9th,Abbottabad,2025,Private,4838,1591
 9th,Abbottabad,2025,Regular,68621,42178
 9th,Abbottabad,2026,Private,4609,2021
 9th,Abbottabad,2026,Regular,67758,44198
+9th,Bahawalpur,2024,Private,17716,5742
+9th,Bahawalpur,2024,Regular,88201,40900
 9th,Bahawalpur,2025,Private,20113,6063
 9th,Bahawalpur,2025,Regular,90324,41511
 9th,Bahawalpur,2026,Private,19211,5067
@@ -161,38 +165,56 @@ Class,Board,Year,Category,Appeared,Passed
 9th,Bannu,2025,Regular,27043,19629
 9th,Bannu,2026,Private,2561,1302
 9th,Bannu,2026,Regular,28467,22333
+9th,DG Khan,2024,Private,26438,11971
+9th,DG Khan,2024,Regular,77810,43060
 9th,DG Khan,2025,Private,26736,13272
 9th,DG Khan,2025,Regular,79118,47426
 9th,DG Khan,2026,Private,26077,10150
 9th,DG Khan,2026,Regular,79924,40931
+9th,FBISE,2024,Private,11110,2468
+9th,FBISE,2024,Regular,132062,81583
 9th,FBISE,2025,Private,13073,3020
 9th,FBISE,2025,Regular,131483,86862
 9th,FBISE,2026,Private,14313,2578
 9th,FBISE,2026,Regular,133998,86068
+9th,Faisalabad,2024,Private,26194,8326
+9th,Faisalabad,2024,Regular,168055,85014
 9th,Faisalabad,2025,Private,30976,11003
 9th,Faisalabad,2025,Regular,174206,94766
 9th,Faisalabad,2026,Private,28443,9309
 9th,Faisalabad,2026,Regular,168213,91399
+9th,Gujranwala,2024,Private,64670,23759
+9th,Gujranwala,2024,Regular,192148,97914
 9th,Gujranwala,2025,Private,76919,29842
 9th,Gujranwala,2025,Regular,194544,104192
 9th,Gujranwala,2026,Private,66349,22865
 9th,Gujranwala,2026,Regular,183003,93101
+9th,Kohat,2024,Private,2828,1201
+9th,Kohat,2024,Regular,46670,38149
 9th,Kohat,2025,Private,2849,697
 9th,Kohat,2025,Regular,48910,20792
 9th,Kohat,2026,Private,1672,427
 9th,Kohat,2026,Regular,44264,13592
+9th,Lahore,2024,Private,100021,32325
+9th,Lahore,2024,Regular,186977,95511
 9th,Lahore,2025,Private,116226,38806
 9th,Lahore,2025,Regular,191847,100088
 9th,Lahore,2026,Private,100412,33977
 9th,Lahore,2026,Regular,180264,96566
+9th,Mardan,2024,Private,2741,939
+9th,Mardan,2024,Regular,76012,54200
 9th,Mardan,2025,Private,2855,2702
 9th,Mardan,2025,Regular,79811,79300
 9th,Mardan,2026,Private,2674,2560
 9th,Mardan,2026,Regular,79791,79209
+9th,Peshawar,2024,Private,5792,5483
+9th,Peshawar,2024,Regular,89261,88566
 9th,Peshawar,2025,Private,5575,5221
 9th,Peshawar,2025,Regular,96313,95439
 9th,Peshawar,2026,Private,5213,4958
 9th,Peshawar,2026,Regular,92737,91992
+9th,Rawalpindi,2024,Private,17362,4793
+9th,Rawalpindi,2024,Regular,106428,51956
 9th,Rawalpindi,2025,Private,18157,4619
 9th,Rawalpindi,2025,Regular,107832,49038
 9th,Rawalpindi,2026,Private,16578,2997
@@ -201,9 +223,13 @@ Class,Board,Year,Category,Appeared,Passed
 9th,Sahiwal,2025,Regular,72849,35736
 9th,Sahiwal,2026,Private,19196,6500
 9th,Sahiwal,2026,Regular,67897,31303
+9th,Sargodha,2024,Private,16384,6112
+9th,Sargodha,2024,Regular,91139,41176
 9th,Sargodha,2025,Private,19052,7288
 9th,Sargodha,2025,Regular,93440,44878
 9th,Sargodha,2026,Private,16807,5887
 9th,Sargodha,2026,Regular,90975,40038
+9th,Swat,2024,Private,2665,625
+9th,Swat,2024,Regular,47658,25397
 9th,Swat,2026,Private,2294,600
 9th,Swat,2026,Regular,47751,24208

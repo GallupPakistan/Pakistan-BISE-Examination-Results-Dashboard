@@ -172,7 +172,7 @@ Kohat,2025,Chemistry,22193,11238,51
 Kohat,2025,Biology,20328,13055,64
 Kohat,2025,Mathematics,9729,3637,37
 Kohat,2025,Computer Science,7823,5761,74
-Kohat,2025,Islamic Studies,4472,3804,85
+Kohat,2025,Islamyat Elective,4472,3804,85
 Kohat,2025,Civics,4396,3111,71
 Kohat,2025,Islamic History,2951,2329,79
 Kohat,2025,Health & Physical Education,1890,1696,90
@@ -195,24 +195,6 @@ Lahore,2024,"English (Humanities, overall)",53854,28600,53.11
 Lahore,2024,Computer Science (Humanities),14678,9210,62.75
 Lahore,2024,"Civics (Humanities, overall)",22514,20557,91.31
 Lahore,2024,"Education (Humanities, overall)",33583,29626,88.22
-Lahore,2025,Translation of Holy Quran (Pre-Med),35216,35109,99.7
-Lahore,2025,Urdu (Pre-Med),36693,36196,98.65
-Lahore,2025,English (Pre-Med),36704,34699,94.54
-Lahore,2025,Physics (Pre-Med),36704,30442,82.94
-Lahore,2025,Chemistry (Pre-Med),36704,28637,78.02
-Lahore,2025,Biology (Pre-Med),36704,28507,77.67
-Lahore,2025,Mathematics (Pre-Eng),7479,6353,84.94
-Lahore,2025,Physics (Pre-Eng),7479,6413,85.75
-Lahore,2025,Chemistry (Pre-Eng),7479,6319,84.49
-Lahore,2025,Mathematics (Gen. Science),62348,41373,66.36
-Lahore,2025,Computer Science (Gen. Science),62276,57230,91.9
-Lahore,2025,Physics (Gen. Science),48536,38017,78.33
-Lahore,2025,"English (Commerce, overall)",10145,7029,69.29
-Lahore,2025,"Principles of Accounting (Commerce, overall)",10145,8812,86.86
-Lahore,2025,"English (Humanities, overall)",54903,26063,47.47
-Lahore,2025,Computer Science (Humanities),19035,11863,62.32
-Lahore,2025,"Civics (Humanities, overall)",22074,19152,86.76
-Lahore,2025,"Education (Humanities, overall)",33609,29490,87.74
 Peshawar,2024,English,62885,60184,95.7
 Peshawar,2024,Urdu,62847,60679,96.55
 Peshawar,2024,Islamic Education,62602,61635,98.46
@@ -320,3 +302,121 @@ FBISE (Islamabad),2025,Principles of Accounting-I,4790,3297,68.83
 FBISE (Islamabad),2025,Principles of Commerce,4345,3194,73.51
 FBISE (Islamabad),2025,Principles of Economics,5022,3023,60.2
 FBISE (Islamabad),2025,Business Mathematics,4527,2752,60.79
+Abbottabad,2026,English,48993,45949,93.79
+Abbottabad,2026,Ethics,25,23,92.0
+Abbottabad,2026,Urdu (Comp),47807,43972,91.98
+Abbottabad,2026,Pakistani Culture,10,6,60.0
+Abbottabad,2026,Islamyat Compulsory,47390,45087,95.14
+Abbottabad,2026,Clothing & Related Arts,6,4,66.67
+Abbottabad,2026,Home Management,6,4,66.67
+Abbottabad,2026,Food & Nutrition,6,4,66.67
+Abbottabad,2026,Education,650,516,79.38
+Abbottabad,2026,Islamic History,7892,6599,83.62
+Abbottabad,2026,Economics,2851,1702,59.7
+Abbottabad,2026,Psychology,610,475,77.87
+Abbottabad,2026,Civics,11719,9460,80.72
+Abbottabad,2026,Statistics,1531,866,56.56
+Abbottabad,2026,Mathematics,14931,10163,68.07
+Abbottabad,2026,Home Economics,256,252,98.44
+Abbottabad,2026,Islamyat Elective,10557,8591,81.38
+Abbottabad,2026,Health & Phy. Education,5078,4762,93.78
+Abbottabad,2026,Library Science,833,767,92.08
+Abbottabad,2026,General Mathematics,82,57,69.51
+Abbottabad,2026,Geography,504,476,94.44
+Abbottabad,2026,Arabic,501,467,93.21
+Abbottabad,2026,Pashto,96,61,63.54
+Abbottabad,2026,English Advance,6,4,66.67
+Abbottabad,2026,Physics,34245,27095,79.12
+Abbottabad,2026,Chemistry,23725,20995,88.49
+Abbottabad,2026,Biology,19874,16913,85.1
+Abbottabad,2026,Archaeology,177,163,92.09
+Abbottabad,2026,Mutaliae-Quran-e-Hakeem,47497,45864,96.56
+Abbottabad,2026,Computer Science,11000,10262,93.29
+Abbottabad,2026,Urdu Advance,972,900,92.59
+Kohat,2026,English,28868,21327,74
+Kohat,2026,Physics,26545,10155,38
+Kohat,2026,Urdu,26289,22550,86
+Kohat,2026,Islamic Education,24461,19110,78
+Kohat,2026,Mutaliae Quran-e-Hakeem,24165,19298,80
+Kohat,2026,Chemistry,19624,8398,43
+Kohat,2026,Biology,17516,7463,43
+Kohat,2026,Mathematics,10623,2497,24
+Kohat,2026,Computer Science,6311,4084,65
+Kohat,2026,Civics,3202,2299,72
+Kohat,2026,Islamyat Elective,2882,2492,86
+Kohat,2026,Islamic History,1651,1188,72
+Kohat,2026,Health & Physical Education,1514,1421,94
+Kohat,2026,Statistics,601,486,81
+Kohat,2026,Economics,567,434,77
+Kohat,2026,Psychology,298,209,70
+Kohat,2026,Urdu Advance,205,184,90
+Kohat,2026,Geography,192,169,88
+Kohat,2026,Pashto,189,163,86
+Kohat,2026,General Mathematics,121,89,74
+Kohat,2026,Archaeology,112,101,90
+Kohat,2026,Education,85,69,81
+Kohat,2026,Library Science,45,44,98
+Kohat,2026,English Advance,36,27,75
+Kohat,2026,Arabic,35,30,86
+Kohat,2026,Fine Arts,32,0,0
+Kohat,2026,Outline of Home Economics,23,23,100
+Kohat,2026,Ethics,17,15,88
+Kohat,2026,General History,7,0,0
+Kohat,2026,Sociology-I,6,6,100
+Kohat,2026,Child Dev/Home Management,1,1,100
+Kohat,2026,Clothing & Related Arts,1,1,100
+Lahore,2025,Translation of the Holy Quran,167715,164938,98.34
+Lahore,2025,Urdu,171561,161163,93.94
+Lahore,2025,Pakistani Culture,18,18,100.0
+Lahore,2025,English,171579,129890,75.7
+Lahore,2025,Islamic Education,168129,165631,98.51
+Lahore,2025,Religious Education,3450,3379,97.94
+Lahore,2025,Physics,92719,74872,80.75
+Lahore,2025,Chemistry,44183,34956,79.12
+Lahore,2025,Biology,36704,28507,77.67
+Lahore,2025,Civics for Non Muslim,100,99,99.0
+Lahore,2025,Ethics for Non Muslims,3749,3668,97.84
+Lahore,2025,Mathematics,70107,47851,68.25
+Lahore,2025,Computer Science,81311,69093,84.97
+Lahore,2025,Economics,10503,8440,80.36
+Lahore,2025,Statistics,9812,7746,78.94
+Lahore,2025,Principles of Accounting,10145,8812,86.86
+Lahore,2025,Principles of Commerce,10145,9661,95.23
+Lahore,2025,Principles of Economics,10145,7101,70.0
+Lahore,2025,Business Mathematics,10145,9427,92.92
+Lahore,2025,Sociology,11207,9565,85.35
+Lahore,2025,History of Muslim India,67,63,94.03
+Lahore,2025,Outlines of Home Economics,2025,2013,99.41
+Lahore,2025,Music,43,37,86.05
+Lahore,2025,Islamyat Elective,28970,27723,95.7
+Lahore,2025,Punjabi,9808,9066,92.43
+Lahore,2025,Education,33609,29490,87.74
+Lahore,2025,Civics,22074,19152,86.76
+Lahore,2025,History of Islam,2205,2019,91.56
+Lahore,2025,Arabic,3078,3010,97.79
+Lahore,2025,Persian,4636,4586,98.92
+Lahore,2025,Library Science,813,783,96.31
+Lahore,2025,Geography,1829,1579,86.33
+Lahore,2025,History of Modern World,17,16,94.12
+Lahore,2025,Fine Art,782,762,97.44
+Lahore,2025,Psychology,4641,4582,98.73
+Lahore,2025,Urdu Advance,692,654,94.51
+Lahore,2025,English Elective,611,604,98.85
+Lahore,2025,Commercial Practice,42,42,100.0
+Lahore,2025,Clothing & Textiles,201,198,98.51
+Lahore,2025,Home Management,201,197,98.01
+Lahore,2025,Chemistry Home Eco Group,201,201,100.0
+Lahore,2025,Biology Home Eco Group,201,201,100.0
+Lahore,2025,Health & Physical Education,8742,8349,95.5
+Lahore,2025,Military Science,5,5,100.0
+Lahore,2025,Geology,31,30,96.77
+Lahore,2025,French,33,32,96.97
+Lahore,2025,Philosophy,470,453,96.38
+Lahore,2025,History of Pakistan,1845,1312,71.11
+Lahore,2025,Nursing,13,13,100.0
+Lahore,2025,Applied Science-I,6,6,100.0
+Lahore,2025,Basic Medical Sciences-I,6,6,100.0
+Lahore,2025,Microbiology,18,15,83.33
+Lahore,2025,Elementary Anatomy & Microtechniques,18,17,94.44
+Lahore,2025,Dental Hygiene-I,6,6,100.0
+Lahore,2025,Elementary Chemistry & Chemical Pathology,18,18,100.0
