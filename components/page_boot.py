@@ -17,9 +17,12 @@ def boot(page, subtitle, stat_label="Classes", stat_value="4", stat_icon="school
     render_topbar(active_page=page, subtitle=subtitle, stat_label=stat_label, stat_value=stat_value, stat_icon=stat_icon)
 
 
-def year_and_class(key, years=(2026, 2025, 2024), allow_all=False, title="Select Year to View Results"):
-    """Year pills (default 2026) + class pills (default 12th). Returns (year, class)."""
+def year_and_class(key, years=(2026, 2025, 2024), allow_all=False, title="Select Year to View Results", show_class=True):
+    """Year pills (default 2026) + class pills (default 12th), drawn in the sidebar.
+    show_class=False hides the class pills (for pages that show all classes). Returns (year, class)."""
     year = render_page_header(title, year_options=list(years), year_default=DEFAULT_YEAR, key=f"{key}_year")
+    if not show_class:
+        return year, DEFAULT_CLASS
     opts = (["All Classes"] if allow_all else []) + CLASSES
     cls = render_filter_bar("Class", options=opts, default=DEFAULT_CLASS, key=f"{key}_class") or DEFAULT_CLASS
     return year, cls
