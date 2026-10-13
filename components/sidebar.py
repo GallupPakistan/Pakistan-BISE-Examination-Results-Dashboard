@@ -48,6 +48,11 @@ def render_sidebar() -> None:
         for page_path, link_label, icon in PAGES:
             st.page_link(page_path, label=link_label, icon=icon)
 
+        # Filters area: every page's Year / Class / Province / Board pills are drawn here
+        # (see components/filter_bar.py -> filter_slot).
+        st.markdown('<div class="sidebar-filters-title">Filters</div>', unsafe_allow_html=True)
+        st.session_state["_filter_slot"] = st.container()
+
         st.markdown(
             '<div class="sidebar-tagline">9th · 10th · 11th · 12th<br>'
             "2024 · 2025 · 2026 · 15 BISE Boards</div>",
