@@ -617,6 +617,47 @@ def _filter_bar_css() -> str:
         scrollbar-width: thin;
         padding-bottom: 2px;
     }}
+    /* ---- Filters living in the sidebar ---- */
+    .sidebar-filters-title {{
+        margin: 1rem 0 0.5rem 0.2rem;
+        padding-top: 0.9rem;
+        border-top: 1px solid rgba(255,255,255,0.12);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        opacity: 0.85;
+    }}
+    section[data-testid="stSidebar"] [data-testid="stVerticalBlockBorderWrapper"] {{
+        border: 1px solid rgba(255,255,255,0.18) !important;
+        background: rgba(255,255,255,0.05) !important;
+        border-radius: 14px !important;
+    }}
+    section[data-testid="stSidebar"] .filter-bar-label {{
+        color: rgba(255,255,255,0.75) !important;
+    }}
+    /* narrow sidebar: let pills wrap onto several lines instead of scrolling sideways */
+    section[data-testid="stSidebar"] div[data-testid="stButtonGroup"] {{
+        flex-wrap: wrap !important;
+        overflow-x: visible !important;
+    }}
+    /* Sidebar pills: the sidebar's "all text is white" rule was painting white text on the
+       white unselected pills. Force readable colours on the pill text itself. */
+    section[data-testid="stSidebar"] div[data-testid="stButtonGroup"] button[data-testid="stBaseButton-pills"],
+    section[data-testid="stSidebar"] div[data-testid="stButtonGroup"] button[kind="pills"] {{
+        background-color: #FFFFFF !important;
+        border: 1px solid {COLORS['card_border_light']} !important;
+    }}
+    section[data-testid="stSidebar"] div[data-testid="stButtonGroup"] button[data-testid="stBaseButton-pills"] *,
+    section[data-testid="stSidebar"] div[data-testid="stButtonGroup"] button[kind="pills"] * {{
+        color: {COLORS['text_on_light']} !important;
+        -webkit-text-fill-color: {COLORS['text_on_light']} !important;
+    }}
+    section[data-testid="stSidebar"] div[data-testid="stButtonGroup"] button[data-testid="stBaseButton-pillsActive"] *,
+    section[data-testid="stSidebar"] div[data-testid="stButtonGroup"] button[kind="pillsActive"] * {{
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+    }}
     /* Multiselect chips: brand blue instead of Streamlit's default red */
     span[data-baseweb="tag"] {{
         background-color: {COLORS['accent']} !important;
