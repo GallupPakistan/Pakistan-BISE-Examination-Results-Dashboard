@@ -641,18 +641,22 @@ def _filter_bar_css() -> str:
         flex-wrap: wrap !important;
         overflow-x: visible !important;
     }}
-    /* Sidebar pills: the sidebar's "all text is white" rule was painting white text on the
-       white unselected pills. Force readable colours on the pill text itself. */
+    /* Sidebar pills. Newer Streamlit marks pill buttons with data-variant="pills" and
+       aria-checked (no data-testid / kind), older ones use stBaseButton-pills; cover both.
+       Unselected: white pill, dark text. Selected: brand blue, white text. */
+    section[data-testid="stSidebar"] div[data-testid="stButtonGroup"] button[data-variant="pills"]:not([aria-checked="true"]),
     section[data-testid="stSidebar"] div[data-testid="stButtonGroup"] button[data-testid="stBaseButton-pills"],
     section[data-testid="stSidebar"] div[data-testid="stButtonGroup"] button[kind="pills"] {{
         background-color: #FFFFFF !important;
         border: 1px solid {COLORS['card_border_light']} !important;
     }}
+    section[data-testid="stSidebar"] div[data-testid="stButtonGroup"] button[data-variant="pills"]:not([aria-checked="true"]) *,
     section[data-testid="stSidebar"] div[data-testid="stButtonGroup"] button[data-testid="stBaseButton-pills"] *,
     section[data-testid="stSidebar"] div[data-testid="stButtonGroup"] button[kind="pills"] * {{
         color: {COLORS['text_on_light']} !important;
         -webkit-text-fill-color: {COLORS['text_on_light']} !important;
     }}
+    section[data-testid="stSidebar"] div[data-testid="stButtonGroup"] button[data-variant="pills"][aria-checked="true"] *,
     section[data-testid="stSidebar"] div[data-testid="stButtonGroup"] button[data-testid="stBaseButton-pillsActive"] *,
     section[data-testid="stSidebar"] div[data-testid="stButtonGroup"] button[kind="pillsActive"] * {{
         color: #FFFFFF !important;
