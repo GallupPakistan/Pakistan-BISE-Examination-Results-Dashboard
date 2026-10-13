@@ -11,25 +11,31 @@ Capsule filter rows shown under the topbar. Each row is a bordered white card
 import streamlit as st
 
 
+def filter_slot():
+    """Where filters are drawn: the 'Filters' area created by components/sidebar.py
+    (falls back to the plain sidebar if the slot isn't there)."""
+    return st.session_state.get("_filter_slot") or st.sidebar
+
+
 def render_filter_bar(label: str, options: list, default=None, key: str = "", multi: bool = False):
     """Single labeled row of capsule filter options."""
-    with st.container(border=True):
-        st.markdown(f'<span class="filter-bar-label">{label}</span>', unsafe_allow_html=True)
-        return st.pills(label, options=options, default=default,
-                        selection_mode="multi" if multi else "single", key=key, label_visibility="collapsed")
+    with filter_slot():
+        with st.container(border=True):
+            st.markdown(f'<span class="filter-bar-label">{label}</span>', unsafe_allow_html=True)
+            return st.pills(label, options=options, default=default,
+                            selection_mode="multi" if multi else "single", key=key, label_visibility="collapsed")
 
 
 def render_filter_row(filters: list[dict]):
     """
-    Several filters side by side in ONE bordered card. Each dict: label, options, default, key,
+    Several filters stacked in ONE bordered card in the sidebar. Each dict: label, options, default, key,
     multi (bool), and optionally dropdown=True (multiselect; leave default empty to mean "all"),
     placeholder (text shown in an empty dropdown).
     """
     results = {}
-    with st.container(border=True):
-        cols = st.columns(len(filters))
-        for col, f in zip(cols, filters):
-            with col:
+    with filter_slot():
+        with st.container(border=True):
+            for f in filters:
                 st.markdown(f'<span class="filter-bar-label">{f["label"]}</span>', unsafe_allow_html=True)
                 if f.get("dropdown"):
                     results[f["key"]] = st.multiselect(f["label"], options=f["options"], default=f.get("default"),
