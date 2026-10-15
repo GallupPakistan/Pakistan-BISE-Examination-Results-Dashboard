@@ -1,4 +1,4 @@
-"""pages/15_Province_Comparison.py - Punjab vs Khyber Pakhtunkhwa vs Federal (FBISE): classes, gender, Regular vs Private."""
+"""pages/15_Province_Comparison.py - Punjab vs Khyber Pakhtunkhwa vs Sindh vs Federal (FBISE): classes, gender, Regular vs Private."""
 import streamlit as st
 import pandas as pd
 from config.settings import CLASSES, PROVINCE_BOARD_MAP
@@ -8,16 +8,16 @@ from components.chart_card import chart_card
 from data.loader import load, agg, prev_year, like_for_like, promoted
 import charts.extra_charts as X
 
-PROVS = ["Punjab", "Khyber Pakhtunkhwa", "Federal"]
-ACCENT = {"Punjab": "blue", "Khyber Pakhtunkhwa": "green", "Federal": "gold"}
+PROVS = ["Punjab", "Khyber Pakhtunkhwa", "Sindh", "Federal"]
+ACCENT = {"Punjab": "blue", "Khyber Pakhtunkhwa": "green", "Sindh": "blue", "Federal": "gold"}
 
 
 def section(t):
     st.markdown(f'<div class="page-header-title" style="margin:1.2rem 0 .4rem">{t}</div>', unsafe_allow_html=True)
 
 
-boot("Province Comparison", "Punjab vs Khyber Pakhtunkhwa vs Federal (FBISE): classes, gender and Regular vs Private (default: 12th class, 2026).",
-     stat_label="Provinces", stat_value="3", stat_icon="map")
+boot("Province Comparison", "Punjab vs Khyber Pakhtunkhwa vs Sindh vs Federal (FBISE): classes, gender and Regular vs Private (default: 12th class, 2026).",
+     stat_label="Provinces", stat_value=str(len(PROVS)), stat_icon="map")
 year, cls = year_and_class("pv", title="Select Year to View Results")
 other = prev_year(year)
 
@@ -27,6 +27,7 @@ C = load("category"); C = C[C["Province"].isin(PROVS)]
 oy, oc = O[O["Year"] == year], O[(O["Year"] == year) & (O["Class"] == cls)]
 if oc.empty: no_data(cls, year, O[O["Class"] == cls])
 st.caption("Federal means FBISE (Islamabad), a single board, while Punjab has up to 8 boards and Khyber Pakhtunkhwa up to 6. "
+           "Sindh is BIEK Karachi only, and only for 12th (the one Sindh board/class with official gazette statistics). "
            "Province figures pool the boards that published that class and year.")
 _pr = promoted(oc)
 if _pr:

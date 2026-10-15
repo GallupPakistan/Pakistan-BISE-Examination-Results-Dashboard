@@ -1,6 +1,6 @@
 # 🎓 BISE Insight - Pakistan Board Results Dashboard (9th-12th, 2024-2026)
 
-An interactive Streamlit dashboard that brings the official **9th, 10th, 11th and 12th class** result gazettes of **15 BISE boards** into one place, so results can be compared across classes, boards, provinces, years, genders, groups, subjects and districts.
+An interactive Streamlit dashboard that brings the official **9th, 10th, 11th and 12th class** result gazettes of **16 BISE boards** (Punjab, Khyber Pakhtunkhwa, Federal and, for 12th only, BIEK Karachi in Sindh) into one place, so results can be compared across classes, boards, provinces, years, genders, groups, subjects and districts.
 
 > **Live app:** _add your Streamlit Cloud link here_
 
@@ -11,7 +11,7 @@ An interactive Streamlit dashboard that brings the official **9th, 10th, 11th an
 - **Overview** - Pakistan map, top boards, province tiles, class comparison and auto-generated *Important Points*
 - **Class Comparison** - key insights, board rank across classes (bump chart), consistency, rank movement, ranking table + CSV
 - **Board Report Card** - pick a board + year: all 4 classes with pass %, rank, change vs previous year, 3-year trend, best/weakest subject and group, plus a **one-page PDF download**
-- **Province Comparison** - Punjab vs Khyber Pakhtunkhwa vs Federal (FBISE): pass % by class, trend, gender gap, Regular vs Private gap
+- **Province Comparison** - Punjab vs Khyber Pakhtunkhwa vs Sindh vs Federal (FBISE): pass % by class, trend, gender gap, Regular vs Private gap
 - **Head to Head** - compare any two selections (class + year + province) with a like-for-like toggle
 - **Cohort Progress** - follows a batch 9th → 10th → 11th → 12th (funnel, carry-over %, pass % change by board)
 - **Board Comparison · Gender Analysis · Group Wise · Regular vs Private**
@@ -81,6 +81,7 @@ The app opens at `http://localhost:8501`.
 - **11th:** no Regular vs Private and no Grade Distribution published.
 - **9th / 10th:** only a few boards publish district data.
 - **Promoted results** (pass % near 99%, not comparable): 11th Mardan and Bannu 2025, 9th Peshawar 2024-2026, 9th Mardan 2025-2026. Pages flag these automatically (any board-year at 97%+).
+- **Sindh:** only BIEK Karachi 12th (2024-2026), built from the official gazettes' statistics page (`data/source/sindh_biek_12th.csv`, one row per group with a source link). No grades, subjects, districts or Regular/Private split. Other Sindh boards and classes are not included because only roll-number lists or news figures are available.
 - **11th 2026:** only 3 boards (Abbottabad, Bannu, Kohat) have published so far.
 - **Grades** are a split of *passed* candidates. Where a gazette puts failed candidates in the last grade (10th Lahore "E", 10th Bannu 2025) the build recomputes E as Passed − (A+ … D).
 - **Subject "Appeared"** counts paper entries, not unique students (e.g. Islamiyat and Islamic Studies are merged as Islamic Education), so it can exceed the board total.

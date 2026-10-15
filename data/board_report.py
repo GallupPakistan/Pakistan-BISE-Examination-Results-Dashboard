@@ -98,6 +98,9 @@ def highlights(rep: dict) -> list[str]:
     if worst is None and len(cl) > 1:          # e.g. last in every class - do not call that the "strongest" position
         out.append("Same relative position in every class: " + "; ".join(
             f"{r['class']} ({r['year']}) {ordinal(r['rank'])} of {r['n_boards']}" for r in cl) + ".")
+    elif len(cl) == 1:                            # e.g. BIEK Karachi publishes 12th only
+        out.append(f"Position: {best['class']} ({best['year']}), ranked {ordinal(best['rank'])} of {best['n_boards']} boards "
+                   f"with a {best['pct']:.1f}% pass rate.")
     else:
         out.append(f"Strongest position: {best['class']} ({best['year']}), ranked {ordinal(best['rank'])} of {best['n_boards']} boards "
                    f"with a {best['pct']:.1f}% pass rate.")

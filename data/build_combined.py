@@ -10,6 +10,9 @@ Sources in data/source/:
   * *_9th.csv / *_12th.csv  - tidy tables exported from the 9th and 12th dashboards
   * *_10th*.csv             - extracted from the 10th dashboard's own loader (data_loader.py)
   * *_11th*.csv             - read from the 11th workbook's "Combined ..." sheets
+  * sindh_biek_12th.csv     - BIEK Karachi 12th (HSC Part-II), one row per group from the official result gazettes'
+                              "Statistics of the Results" page (male/female split). Only these Sindh figures are used:
+                              other Sindh boards/classes publish roll-number lists only, or appear only in news reports.
 """
 import re
 from pathlib import Path
@@ -60,6 +63,10 @@ d11 = sheet_tab(S / "11th_Class_Boards_Results_Combined.xlsx", "Combined Overvie
 d11 = d11[d11["Board"].notna()]
 rows.append(tidy(d11.rename(columns={"Total Appeared": "Appeared", "Total Passed": "Passed"}), "11th", AP))
 rows.append(tidy(pd.read_csv(S / "overall_12th.csv"), "12th", AP))
+# Sindh: BIEK Karachi 12th - board total = sum of its group gazettes (Pre-Medical, Pre-Engineering, Science General,
+# Commerce and Humanities regular/private). Home Economics / special candidates (a few hundred) are not included.
+SND = pd.read_csv(S / "sindh_biek_12th.csv")
+rows.append(tidy(SND.groupby(["Board", "Year"], as_index=False)[AP].sum(), "12th", AP))
 overall = pd.concat(rows).drop_duplicates(["Class", "Board", "Year"]).sort_values(["Class", "Board", "Year"])
 overall.to_csv(O / "overall.csv", index=False)
 TOT = overall.set_index(["Class", "Board", "Year"])["Appeared"]
@@ -103,6 +110,10 @@ if gs: gender.append(pd.concat(gs))
 for sx in ("Male", "Female"):
     t = d11.rename(columns={f"{sx} Appeared": "Appeared", f"{sx} Passed": "Passed"}).copy()
     t["Gender"] = sx; gender.append(tidy(t, "11th", AP, ["Gender"]))
+for sx in ("Male", "Female"):
+    t = SND.groupby(["Board", "Year"], as_index=False)[[f"{sx} Appeared", f"{sx} Passed"]].sum()
+    t = t.rename(columns={f"{sx} Appeared": "Appeared", f"{sx} Passed": "Passed"}); t["Gender"] = sx
+    gender.append(tidy(t, "12th", AP, ["Gender"]))
 gender = pd.concat(gender); gender = gender[gender["Gender"].isin(["Male", "Female"])]
 gender = agg(gender, ["Class", "Board", "Year", "Gender"]); gender.to_csv(O / "gender.csv", index=False)
 
@@ -143,6 +154,8 @@ r11 = r11[~r11["Category (Gender/Type)"].astype(str).str.lower().isin(["total", 
 r11["Group"] = r11["Group"].map(canon_group)
 g11 = agg(tidy(r11, "11th", AP, ["Group"]), ["Class", "Board", "Year", "Group"])
 grp.append(reconcile(g11))
+gs = SND.assign(Group=SND["Group"].map(canon_group))          # Science General -> General Science; regular + private merged
+grp.append(reconcile(agg(tidy(gs, "12th", AP, ["Group"]), ["Class", "Board", "Year", "Group"])))
 group = agg(pd.concat(grp), ["Class", "Board", "Year", "Group"])
 group["Stream"] = group["Group"].map(STREAM).fillna("Other")
 group.to_csv(O / "group.csv", index=False)

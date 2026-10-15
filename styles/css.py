@@ -477,8 +477,9 @@ def _sidebar_css() -> str:
        via components/sidebar.py, so the built-in one would duplicate
        every page name. The collapse/expand arrow (>) that Streamlit
        draws on the sidebar edge is a separate element and stays working. */
-    div[data-testid="stSidebarNav"] {{
-        display: none;
+    /* tag-agnostic: newer Streamlit renders this as <nav>, not <div>, so a div-only selector stopped matching */
+    [data-testid="stSidebarNav"], [data-testid="stSidebarNavSeparator"] {{
+        display: none !important;
     }}
 
     /* Rounded, floating sidebar "card" look */

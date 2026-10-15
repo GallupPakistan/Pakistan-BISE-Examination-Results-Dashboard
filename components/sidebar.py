@@ -55,6 +55,6 @@ def render_sidebar() -> None:
 
         st.markdown(
             '<div class="sidebar-tagline">9th · 10th · 11th · 12th<br>'
-            "2024 · 2025 · 2026 · 15 BISE Boards</div>",
+            "2024 · 2025 · 2026 · 16 BISE Boards</div>",
             unsafe_allow_html=True,
         )

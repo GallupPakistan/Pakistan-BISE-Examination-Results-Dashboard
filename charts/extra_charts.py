@@ -8,8 +8,8 @@ from config.settings import CLASS_COLORS, CLASSES
 from data.loader import agg, like_for_like
 from charts.combined_charts import base, empty, _pct, _cell_txt, _h, CAT_COLORS, GENDER_COLORS, _cls_order, format_k
 
-PROV_COLORS = {"Punjab": "#3B82F6", "Khyber Pakhtunkhwa": "#22C55E", "Federal": "#C9A84C"}
-PROV_ORDER = ["Punjab", "Khyber Pakhtunkhwa", "Federal"]
+PROV_COLORS = {"Punjab": "#3B82F6", "Khyber Pakhtunkhwa": "#22C55E", "Federal": "#C9A84C", "Sindh": "#0EA5E9"}
+PROV_ORDER = ["Punjab", "Khyber Pakhtunkhwa", "Sindh", "Federal"]
 FAIL_SCALE = ["#FEF2F2", "#F87171", "#991B1B"]
 
 
@@ -103,11 +103,12 @@ def chart_prov_trend(df):
     fig = px.line(d, x="Year", y="Pass %", color="Province", markers=True, color_discrete_map=PROV_COLORS,
                   category_orders={"Province": PROV_ORDER})
     fig.update_traces(line=dict(width=3), marker=dict(size=9))
+    fig.update_xaxes(type="category")             # "2024" strings were auto-read as numbers -> ticks like 2,024.5
     return base(fig, 400, "Province")
 
 
 SHORT = {"Khyber Pakhtunkhwa": "KPK"}
-SHORT_ORDER = ["Punjab", "KPK", "Federal"]
+SHORT_ORDER = ["Punjab", "KPK", "Sindh", "Federal"]
 
 
 def _split_by_province(df, split, cmap, order):

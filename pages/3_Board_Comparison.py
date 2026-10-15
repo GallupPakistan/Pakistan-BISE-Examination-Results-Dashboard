@@ -30,7 +30,7 @@ def one(title, sub, fig):
         st.plotly_chart(fig, width="stretch")
 
 boot("Board Comparison", "Rank BISE boards by pass rate for a class (default 12th, 2026), then compare across all classes.",
-     stat_label="BISE Boards", stat_value="15", stat_icon="account_balance")
+     stat_label="BISE Boards", stat_value=str(load("overall")["Board"].nunique()), stat_icon="account_balance")
 year, cls = year_and_class("bc", title="Select Year")
 other = prev_year(year)
 full = load("overall")

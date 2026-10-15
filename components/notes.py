@@ -35,11 +35,11 @@ def _names(items) -> str:
 
 
 def _coverage_lines(ov) -> list[str]:
-    all_boards = set(ov["Board"].unique())
     all_years = sorted(ov["Year"].unique())
     lines = []
     for c in CLASSES:
         x = ov[ov["Class"] == c]
+        all_boards = set(x["Board"].unique())       # boards that publish THIS class (BIEK Karachi only does 12th)
         if x.empty:
             lines.append(f"- **{c}:** no results published")
             continue
@@ -99,6 +99,9 @@ def _special_cases(ov) -> list[str]:
         if 0 < n < all_boards / 2:
             out.append(f"{c} {latest} is only partly published ({n} of {all_boards} boards), so its {latest} totals are not "
                        f"comparable with {c} in earlier years, and some cross-class charts show fewer classes for {latest}.")
+    out.append("Sindh = BIEK Karachi, 12th class only, from the official result gazettes (all main groups; Home Economics "
+               "and special candidates, a few hundred, are not included; 2024 also lacks Humanities Private, about 2% of candidates). "
+               "Other Sindh boards and classes publish roll-number lists or news figures only, so they are not in the dashboard.")
     out.append("Boards that did not publish a class in a given year are left out of that year's totals; "
                "year-on-year changes use only boards that published both years.")
     out.append("Source: official BISE result gazettes, in the class workbooks in `data/source/`.")

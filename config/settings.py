@@ -15,5 +15,7 @@ PROVINCE_BOARD_MAP = {
     "Federal": ["FBISE"],
     "Punjab": ["Lahore", "Rawalpindi", "Gujranwala", "Faisalabad", "Sargodha", "Sahiwal", "Bahawalpur", "DG Khan"],
     "Khyber Pakhtunkhwa": ["Peshawar", "Swat", "Abbottabad", "Mardan", "Kohat", "Bannu"],
+    # Sindh: only BIEK Karachi 12th (official gazettes). Other Sindh boards publish roll-number lists only.
+    "Sindh": ["BIEK Karachi"],
 }
 BOARD_PROVINCE = {b: p for p, bs in PROVINCE_BOARD_MAP.items() for b in bs}

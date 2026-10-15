@@ -45,6 +45,10 @@ def base(fig, height=400, legend_title=""):
                       font_size=12, legend_title_text=legend_title, margin=dict(t=10, b=10, l=10, r=10), height=height,
                       bargap=0.3)
     fig.update_xaxes(gridcolor="rgba(20,27,60,0.08)"); fig.update_yaxes(gridcolor="rgba(20,27,60,0.08)")
+    # Years passed as text ("2024") are auto-read by Plotly as numbers, giving ticks like 2,024.5 -> force a category axis
+    xs = [t.x for t in fig.data if getattr(t, "x", None) is not None and len(t.x)]
+    if xs and all(isinstance(v, str) and v.isdigit() and len(v) == 4 for x in xs for v in x):
+        fig.update_xaxes(type="category")
     _tidy_bar_labels(fig)
     return fig
 
@@ -157,7 +161,7 @@ def chart_category_share(c, year):
 
 
 _GEO = Path(__file__).resolve().parent.parent / "assets" / "pakistan_provinces.geojson"
-_ALIAS = {"Punjab": "Punjab", "Khyber Pakhtunkhwa": "Khyber Pakhtunkhwa", "Islamabad Capital Territory": "Federal"}
+_ALIAS = {"Punjab": "Punjab", "Khyber Pakhtunkhwa": "Khyber Pakhtunkhwa", "Islamabad Capital Territory": "Federal", "Sindh": "Sindh"}
 
 
 def chart_pakistan_map(df, year):

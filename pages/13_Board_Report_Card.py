@@ -30,7 +30,8 @@ render_kpi_row([
     dict(icon="military_tech", value=f"#{rep['avg_rank']:.1f}", label="Average rank across classes", accent="gold"),
     dict(icon="emoji_events", value=f"{ordinal(best['rank'])} of {best['n_boards']}", label=f"Best position · {best['class']}", accent="green"),
     dict(icon="trending_down", value=f"{ordinal(worst['rank'])} of {worst['n_boards']}" if worst else "-",
-         label=f"Weakest position · {worst['class']}" if worst else "Weakest position · same in every class", accent="red"),
+         label=f"Weakest position · {worst['class']}" if worst else
+               ("Weakest position · only one class published" if len(cl) == 1 else "Weakest position · same in every class"), accent="red"),
     dict(icon="groups", value=format_compact(sum(r["appeared"] for r in cl)), label=f"Candidates · {len(cl)} classes", accent="blue"),
 ])
 
