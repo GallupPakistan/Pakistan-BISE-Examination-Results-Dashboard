@@ -31,10 +31,30 @@ def _tidy_bar_labels(fig):
             t.text = [re.sub(r"(\d+\.\d)%", lambda m: f"{float(m.group(1)):.0f}%", x) if isinstance(x, str) else x for x in t.text]
 
 
+def _count_label(v):
+    """1094861 -> '1.09M', 734351 -> '734K', 87602 -> '87.6K', 979 -> '979' (3 significant digits)."""
+    v = float(v)
+    if abs(v) >= 1e6: return f"{v / 1e6:.2f}M"
+    if abs(v) >= 1e5: return f"{v / 1e3:.0f}K"
+    if abs(v) >= 1e3: return f"{v / 1e3:.1f}K"
+    return f"{v:,.0f}"
+
+
 def _on_bars(fig, n, kind="pct", limit=24, ymax=None):
     """Value labels on top of bars, only when there is room (<= limit bars). Otherwise hover shows the value."""
     if n > limit: return fig
-    fmt = "%{y:.2s}" if kind == "count" else ("%{y:.0f}%" if n > 8 else "%{y:.1f}%")
+    if kind == "count":
+        # "%{y:.2s}" rounded to 2 significant digits, so different years looked identical
+        # (12th Appeared 1,094,861 and 1,117,453 both showed "1.1M"). Use 3 significant digits; hover shows the exact count.
+        for t in fig.data:
+            if t.type == "bar" and t.y is not None:
+                t.text = [_count_label(v) for v in t.y]
+                t.texttemplate = "%{text}"
+                t.hovertemplate = "%{x}<br>%{fullData.name}: %{y:,.0f}<extra></extra>"
+        fig.update_traces(textposition="outside", cliponaxis=False)
+        if ymax: fig.update_yaxes(range=[0, ymax])
+        return fig
+    fmt = "%{y:.0f}%" if n > 8 else "%{y:.1f}%"
     fig.update_traces(texttemplate=fmt, textposition="outside", cliponaxis=False)
     if ymax: fig.update_yaxes(range=[0, ymax])
     return fig
