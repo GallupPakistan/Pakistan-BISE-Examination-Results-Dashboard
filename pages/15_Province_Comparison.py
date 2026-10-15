@@ -5,7 +5,7 @@ from config.settings import CLASSES, PROVINCE_BOARD_MAP
 from components.page_boot import boot, year_and_class, delta_kpi, no_data, not_published
 from components.kpi_card import render_kpi_row, format_compact
 from components.chart_card import chart_card
-from data.loader import load, agg, prev_year, like_for_like
+from data.loader import load, agg, prev_year, like_for_like, promoted
 import charts.extra_charts as X
 
 PROVS = ["Punjab", "Khyber Pakhtunkhwa", "Federal"]
@@ -28,8 +28,9 @@ oy, oc = O[O["Year"] == year], O[(O["Year"] == year) & (O["Class"] == cls)]
 if oc.empty: no_data(cls, year, O[O["Class"] == cls])
 st.caption("Federal means FBISE (Islamabad), a single board, while Punjab has up to 8 boards and Khyber Pakhtunkhwa up to 6. "
            "Province figures pool the boards that published that class and year.")
-if cls == "11th" and year == 2025:
-    st.warning("11th 2025: Mardan and Bannu report promoted results (pass % near 99%), which lifts the Khyber Pakhtunkhwa figure.")
+_pr = promoted(oc)
+if _pr:
+    st.warning(f"{', '.join(_pr)}: promoted results (pass % near 99%), which lifts the Khyber Pakhtunkhwa figure.")
 
 # ---------- KPIs (selected class)
 cards = []

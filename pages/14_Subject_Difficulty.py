@@ -17,8 +17,11 @@ def section(t):
 
 boot("Subject Difficulty", "Which subjects are hardest in 9th, 10th, 11th and 12th, and how difficulty changes from class to class.",
      stat_label="Classes", stat_value="4", stat_icon="psychology")
+_cov = load("subject").groupby(["Year", "Class"])["Board"].nunique().unstack()
 st.caption("Difficulty = Fail % (100 − Pass %). Higher means harder. Only boards that publish subject results are included. "
-           "9th has 2025-26, 11th has 2024-25, so default is 2025, the one year where all four classes exist.")
+           "Boards with subject data: " + " · ".join(f"{y}: " + ", ".join(f"{c} {int(r[c])}" for c in CLASSES if c in r and r[c] == r[c])
+                                                      for y, r in _cov.sort_index(ascending=False).iterrows()) +
+           ". Default is 2025, where every class has a good number of boards.")
 year = render_page_header("Select Year", year_options=[2026, 2025, 2024], year_default=2025, key="sd_year")
 
 c1, c2 = st.columns([1.2, 1])

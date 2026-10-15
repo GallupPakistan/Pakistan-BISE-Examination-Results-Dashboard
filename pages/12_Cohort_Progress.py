@@ -32,10 +32,10 @@ def one(title, sub, fig):
 import plotly.express as px
 from data.cohort import chains, funnel, transition
 
-boot("Cohort Progress", "Follow a batch of students from one class to the next: how many pass, how many come back, how results change.",
-     stat_label="Cohorts", stat_value="3", stat_icon="route")
 full = load("overall")
 ch = chains(full)
+boot("Cohort Progress", "Follow a batch of students from one class to the next: how many pass, how many come back, how results change.",
+     stat_label="Cohorts", stat_value=str(len(ch)), stat_icon="route")
 label = st.selectbox("Cohort (batch of students)", list(ch), index=list(ch).index(next((k for k in ch if k.endswith("12th 2026")), list(ch)[0])), key="co_chain")
 steps = ch[label]
 f = funnel(full, steps)

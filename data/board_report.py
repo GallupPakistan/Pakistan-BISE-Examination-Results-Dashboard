@@ -5,7 +5,7 @@ and the best / weakest subject and group. It only READS the tidy tables through 
 """
 import pandas as pd
 from config.settings import CLASSES, YEARS
-from data.loader import load, agg
+from data.loader import load, agg, PROMOTED_PCT
 from data.subject_names import unify
 
 MIN_SHARE = 0.01     # a subject/group must have at least 1% of the board's candidates ...
@@ -57,7 +57,7 @@ def class_report(board: str, cls: str, year: int, overall: pd.DataFrame, subject
     gr = group[(group["Class"] == cls) & (group["Board"] == board) & (group["Year"] == y) & (group["Group"] != "Other")]
     gr = agg(gr, ["Group"]) if len(gr) else gr
     note = ""
-    if cls == "11th" and board in ("Mardan", "Bannu") and y == 2025:
+    if float(row["Pass %"]) >= PROMOTED_PCT:      # data-driven: covers 9th Peshawar / Mardan as well as 11th Mardan / Bannu 2025
         note = "Reports promoted results, so pass % is near 99% and not comparable."
     return {
         "class": cls, "year": int(y), "asked_year": int(year), "appeared": float(row["Appeared"]), "passed": float(row["Passed"]),
@@ -81,22 +81,38 @@ def board_report(board: str, year: int) -> dict:
             "missing": [c for c in CLASSES if c not in [r["class"] for r in classes]]}
 
 
+def best_worst(cl: list):
+    """Best / weakest class by RELATIVE position (rank / boards ranked), so 2nd of 3 does not beat 4th of 15.
+    Ties: the larger field wins for best and loses for weakest. worst is None when every class sits in the same spot."""
+    best = min(cl, key=lambda r: (r["rank"] / r["n_boards"], -r["n_boards"]))
+    worst = max(cl, key=lambda r: (r["rank"] / r["n_boards"], r["n_boards"]))
+    same = best["rank"] / best["n_boards"] == worst["rank"] / worst["n_boards"]
+    return best, (None if same else worst)
+
+
 def highlights(rep: dict) -> list[str]:
     """Plain-English lines for management (used on the page and in the PDF)."""
     cl, out = rep["classes"], []
     if not cl: return out
-    best = min(cl, key=lambda r: r["rank"]); worst = max(cl, key=lambda r: r["rank"] / r["n_boards"])
-    out.append(f"Strongest position: {best['class']} ({best['year']}), ranked {ordinal(best['rank'])} of {best['n_boards']} boards "
-               f"with a {best['pct']:.1f}% pass rate.")
-    if worst is not best:
+    best, worst = best_worst(cl)
+    if worst is None and len(cl) > 1:          # e.g. last in every class - do not call that the "strongest" position
+        out.append("Same relative position in every class: " + "; ".join(
+            f"{r['class']} ({r['year']}) {ordinal(r['rank'])} of {r['n_boards']}" for r in cl) + ".")
+    else:
+        out.append(f"Strongest position: {best['class']} ({best['year']}), ranked {ordinal(best['rank'])} of {best['n_boards']} boards "
+                   f"with a {best['pct']:.1f}% pass rate.")
+    if worst is not None:
         out.append(f"Weakest position: {worst['class']} ({worst['year']}), ranked {ordinal(worst['rank'])} of {worst['n_boards']} boards "
                    f"with a {worst['pct']:.1f}% pass rate.")
     moves = [r for r in cl if r["delta"] is not None]
     if moves:
         up = max(moves, key=lambda r: r["delta"]); dn = min(moves, key=lambda r: r["delta"])
-        out.append(f"Biggest improvement: {up['class']} {up['delta']:+.1f} pts vs {up['prev_year']}.")
+        if up["delta"] > 0:                      # never label a fall as an "improvement"
+            out.append(f"Biggest improvement: {up['class']} {up['delta']:+.1f} pts vs {up['prev_year']}.")
         if dn["delta"] < 0 and dn is not up:
             out.append(f"Biggest drop: {dn['class']} {dn['delta']:+.1f} pts vs {dn['prev_year']}.")
+        elif dn["delta"] < 0:
+            out.append(f"Pass rate fell: {dn['class']} {dn['delta']:+.1f} pts vs {dn['prev_year']}.")
     above = [r["class"] for r in cl if r["pct"] >= r["avg_pct"]]
     out.append(f"Above the all-board average in {len(above)} of {len(cl)} classes" + (f" ({', '.join(above)})." if above else "."))
     for r in cl:

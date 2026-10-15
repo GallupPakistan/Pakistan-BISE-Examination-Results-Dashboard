@@ -7,7 +7,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from styles.theme import COLORS, BOARD_COLOR_SEQUENCE
 from config.settings import CLASS_COLORS, CLASSES, YEARS, PROVINCE_BOARD_MAP
-from data.loader import agg
+from data.loader import agg, like_for_like
 
 GENDER_COLORS = {"Male": COLORS["accent"], "Female": COLORS["gold"]}
 CAT_COLORS = {"Regular": COLORS["accent"], "Private": COLORS["gold"]}
@@ -57,6 +57,7 @@ def empty(msg="No data for this selection", height=300):
 
 
 def _pct(s): return s.map(lambda v: f"{v:.1f}%")
+def _cell_txt(pv): return pv.apply(lambda col: col.map(lambda v: "" if pd.isna(v) else f"{v:.1f}%"))   # blank, not 'nan%'
 def _h(n): return max(340, 30 * n + 80)
 
 
@@ -104,6 +105,7 @@ def chart_board_pass_rate(df, year):
 
 
 def chart_yoy_change_by_board(df, y_to, y_from):
+    df = like_for_like(df, y_to, y_from)       # same (class, board) pairs both years, so 'All Classes' is not skewed by a missing class
     a = agg(df[df["Year"] == y_from], ["Board"])[["Board", "Pass %"]].rename(columns={"Pass %": "a"})
     b = agg(df[df["Year"] == y_to], ["Board"])[["Board", "Pass %"]].rename(columns={"Pass %": "b"})
     m = a.merge(b, on="Board")
@@ -190,6 +192,7 @@ def chart_pakistan_map(df, year):
 
 
 def top_movers(df, year, other):
+    df = like_for_like(df, year, other)         # same rule as the KPI deltas and the change-by-board chart
     a = agg(df[df["Year"] == year], ["Board"]).set_index("Board")["Pass %"]
     b = agg(df[df["Year"] == other], ["Board"]).set_index("Board")["Pass %"]
     d = (a - b).dropna()
@@ -230,7 +233,7 @@ def chart_class_trend(df):
 
 
 def chart_class_yoy(df, year, other):
-    ll = df[df["Year"].isin([year, other])]
+    ll = like_for_like(df, year, other)         # 'same boards' per class - matches the KPI deltas on the page
     a = agg(ll[ll["Year"] == other], ["Class"])[["Class", "Pass %"]].rename(columns={"Pass %": "a"})
     b = agg(ll[ll["Year"] == year], ["Class"])[["Class", "Pass %"]].rename(columns={"Pass %": "b"})
     m = a.merge(b, on="Class")
@@ -247,7 +250,7 @@ def chart_heatmap(df, year):
     d = agg(df[df["Year"] == year], ["Board", "Class"])
     if d.empty: return empty()
     pv = d.pivot(index="Board", columns="Class", values="Pass %").reindex(columns=[c for c in CLASSES if c in d["Class"].unique()])
-    fig = go.Figure(go.Heatmap(z=pv.values, x=pv.columns, y=pv.index, text=pv.round(1).astype(str) + "%", texttemplate="%{text}",
+    fig = go.Figure(go.Heatmap(z=pv.values, x=pv.columns, y=pv.index, text=_cell_txt(pv).values, texttemplate="%{text}",
                                colorscale=COLORS["map_scale"], zmin=0, zmax=100, colorbar=dict(title="Pass %"), hoverongaps=False))
     fig.update_yaxes(autorange="reversed")
     return base(fig, _h(len(pv)))
@@ -449,7 +452,7 @@ def chart_subject_heat(s, year, subjects):
     d = agg(s[(s["Year"] == year) & (s["Subject"].isin(subjects))], ["Subject", "Class"])
     if d.empty: return empty()
     pv = d.pivot(index="Subject", columns="Class", values="Pass %").reindex(columns=[c for c in CLASSES if c in d["Class"].unique()])
-    fig = go.Figure(go.Heatmap(z=pv.values, x=pv.columns, y=pv.index, text=pv.round(1).astype(str) + "%", texttemplate="%{text}",
+    fig = go.Figure(go.Heatmap(z=pv.values, x=pv.columns, y=pv.index, text=_cell_txt(pv).values, texttemplate="%{text}",
                                colorscale=COLORS["map_scale"], zmin=0, zmax=100, hoverongaps=False, colorbar=dict(title="Pass %")))
     fig.update_yaxes(autorange="reversed")
     return base(fig, _h(len(pv)))
@@ -471,8 +474,8 @@ def chart_district_by_class(dist, year, board):
     return base(fig, 400, "Class")
 
 
-def chart_district_trend(dist, board):
-    d = agg(dist[dist["Board"] == board], ["Year", "District"])
+def chart_district_trend(dist, board=None):
+    d = agg(dist if board is None else dist[dist["Board"] == board], ["Year", "District"])
     d = d[d.groupby("District")["Year"].transform("nunique") >= 2]
     if d.empty: return empty("Needs districts with at least two years of data")
     fig = px.line(d, x="Year", y="Pass %", color="District", markers=True); fig.update_xaxes(dtick=1)

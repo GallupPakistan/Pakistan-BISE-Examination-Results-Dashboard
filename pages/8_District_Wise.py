@@ -42,7 +42,8 @@ render_kpi_row([
     dict(icon="trending_down", value=f"{cur['Pass %'].min():.1f}%", label=f"Lowest · {cur.sort_values('Pass %').iloc[0]['District']}", accent="red"),
     dict(icon="account_balance", value=str(len(boards)), label="Boards with district data", accent="gold"),
 ])
-two("District Pass %", f"{cls} · {year} · top 20", C.chart_district(sd, year), "District Pass % Trend", f"{cls}", C.chart_district_trend(sd, pick if pick != "All" else boards[0]))
+two("District Pass %", f"{cls} · {year} · top 20", C.chart_district(sd, year), "District Pass % Trend",
+    f"{cls} · {'all boards' if pick == 'All' else pick} · districts with 2+ years", C.chart_district_trend(sd, None if pick == "All" else pick))
 section("Compare All 4 Classes")
 cb = sorted(D[D["Year"] == year]["Board"].unique())
 board_c = st.selectbox("Board", cb, index=cb.index(pick) if pick in cb else 0, key="ds_cmp_board")

@@ -177,7 +177,20 @@ gr = [tidy(pd.read_csv(S / "grade_9th.csv"), "9th", ["Count"], ["Grade"]),
       tidy(pd.read_csv(S / "grade_12th.csv"), "12th", ["Count"], ["Grade"]),
       tidy(pd.read_csv(S / "grade_10th_raw.csv"), "10th", ["Count"], ["Grade"])]
 grade = pd.concat(gr); grade["Grade"] = grade["Grade"].map(GMAP); grade = grade.dropna(subset=["Grade"])
-grade = agg(grade, ["Class", "Board", "Year", "Grade"]); grade.to_csv(O / "grade.csv", index=False)
+grade = agg(grade, ["Class", "Board", "Year", "Grade"])
+# Some gazettes put failed candidates in the last grade bucket (e.g. 10th Lahore "E" = E + fail, 10th Bannu 2025),
+# so the grades add up to Appeared instead of Passed. Grades are a split of PASSED candidates, so in that case
+# E is recomputed as Passed - (A+ .. D); if A+ .. D alone already exceed Passed, E is dropped.
+PAS = overall.set_index(["Class", "Board", "Year"])["Passed"]
+fixed = []
+for k, g in grade.groupby(["Class", "Board", "Year"]):
+    p = PAS.get(k)
+    if p and g["Count"].sum() > p * 1.02 and "E" in set(g["Grade"]):
+        g = g.copy(); e = p - g.loc[g["Grade"] != "E", "Count"].sum()
+        g = g[g["Grade"] != "E"] if e < 0 else g.assign(Count=g["Count"].where(g["Grade"] != "E", e))
+    fixed.append(g)
+grade = pd.concat(fixed); grade = grade[grade["Count"] > 0]
+grade.to_csv(O / "grade.csv", index=False)
 
 for n, t in [("overall", overall), ("gender", gender), ("category", category), ("group", group),
              ("subject", subject), ("district", district), ("grade", grade)]:

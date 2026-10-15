@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 from styles.theme import COLORS
 from config.settings import CLASS_COLORS, CLASSES
 from data.loader import agg, like_for_like
-from charts.combined_charts import base, empty, _pct, _h, CAT_COLORS, GENDER_COLORS, _cls_order, format_k
+from charts.combined_charts import base, empty, _pct, _cell_txt, _h, CAT_COLORS, GENDER_COLORS, _cls_order, format_k
 
 PROV_COLORS = {"Punjab": "#3B82F6", "Khyber Pakhtunkhwa": "#22C55E", "Federal": "#C9A84C"}
 PROV_ORDER = ["Punjab", "Khyber Pakhtunkhwa", "Federal"]
@@ -78,7 +78,7 @@ def chart_fail_lines(piv):
 
 def chart_fail_heat(piv):
     if piv.empty: return empty("Pick at least one subject")
-    fig = go.Figure(go.Heatmap(z=piv.values, x=list(piv.columns), y=list(piv.index), text=piv.round(1).astype(str) + "%",
+    fig = go.Figure(go.Heatmap(z=piv.values, x=list(piv.columns), y=list(piv.index), text=_cell_txt(piv).values,
                                texttemplate="%{text}", colorscale=FAIL_SCALE, zmin=0, zmax=max(40, float(piv.max().max())),
                                hoverongaps=False, colorbar=dict(title="Fail %")))
     fig.update_yaxes(autorange="reversed")

@@ -6,7 +6,7 @@ from components.page_boot import boot, year_and_class, delta_kpi, no_data, not_p
 from components.filter_bar import render_filter_bar
 from components.kpi_card import render_kpi_row, format_compact
 from components.chart_card import chart_card
-from data.loader import load, agg, totals, prev_year, like_for_like, scope
+from data.loader import load, agg, totals, prev_year, like_for_like, scope, promoted_note
 import charts.combined_charts as C
 import charts.extra_charts as X
 
@@ -52,7 +52,7 @@ two("Appeared = Passed + Failed", f"{cls} · {year}", C.base(fig, 400), "Board S
 one("Board Quadrant", f"{cls} · {year} · pass % vs change from {other}; bubble size = candidates" if other else f"{cls} · needs an earlier year",
     X.chart_quadrant(d, year, other) if other else C.empty("2024 is the first year in the dataset"))
 one("Ranking Race", f"{cls} · press Play to watch the boards re-order by pass % from year to year", X.chart_rank_race(d))
-if cls == "11th" and year == 2025: st.caption("11th 2025: Mardan and Bannu report promoted results (pass % near 99%), so they sit far from the rest.")
+if promoted_note(cur): st.caption(promoted_note(cur) + " They sit far from the rest.")
 section("Compare All 4 Classes")
 boards = st.multiselect("Boards (empty = all)", sorted(full["Board"].unique()), key="bc_boards")
 one("Pass % by Board and Class", f"{year}", C.chart_board_by_class(full, year, boards or None))

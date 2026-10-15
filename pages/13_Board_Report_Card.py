@@ -9,7 +9,7 @@ from components.filter_bar import render_filter_bar
 from components.kpi_card import render_kpi_row, format_compact
 from components.chart_card import chart_card
 from components.report_pdf import build_pdf
-from data.board_report import board_list, board_report, highlights, ordinal, waffle_groups
+from data.board_report import board_list, board_report, highlights, ordinal, waffle_groups, best_worst
 import charts.extra_charts as X
 
 boards = board_list()
@@ -25,11 +25,12 @@ if not cl:
     st.stop()
 
 ranks = {r["class"]: r for r in cl}
-best = min(cl, key=lambda r: r["rank"] / r["n_boards"]); worst = max(cl, key=lambda r: r["rank"] / r["n_boards"])
+best, worst = best_worst(cl)                     # same rule as the Key Points / PDF
 render_kpi_row([
     dict(icon="military_tech", value=f"#{rep['avg_rank']:.1f}", label="Average rank across classes", accent="gold"),
     dict(icon="emoji_events", value=f"{ordinal(best['rank'])} of {best['n_boards']}", label=f"Best position · {best['class']}", accent="green"),
-    dict(icon="trending_down", value=f"{ordinal(worst['rank'])} of {worst['n_boards']}", label=f"Weakest position · {worst['class']}", accent="red"),
+    dict(icon="trending_down", value=f"{ordinal(worst['rank'])} of {worst['n_boards']}" if worst else "-",
+         label=f"Weakest position · {worst['class']}" if worst else "Weakest position · same in every class", accent="red"),
     dict(icon="groups", value=format_compact(sum(r["appeared"] for r in cl)), label=f"Candidates · {len(cl)} classes", accent="blue"),
 ])
 

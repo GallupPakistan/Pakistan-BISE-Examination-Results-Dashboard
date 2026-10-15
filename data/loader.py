@@ -56,3 +56,20 @@ def like_for_like(df: pd.DataFrame, y1: int, y2: int) -> pd.DataFrame:
 
 def scope(df: pd.DataFrame, cls: str) -> pd.DataFrame:
     return df if cls == "All Classes" else df[df["Class"] == cls]
+
+
+PROMOTED_PCT = 97.0   # pass % at or above this = board reported "promoted" results, not strict pass/fail
+
+
+def promoted(df: pd.DataFrame) -> list[str]:
+    """Board-years in `df` whose pass % looks like promoted results, e.g. ['9th Peshawar 2026', '11th Mardan 2025']."""
+    if df.empty: return []
+    d = agg(df, ["Class", "Board", "Year"])
+    d = d[d["Pass %"] >= PROMOTED_PCT]
+    return [f"{r.Class} {r.Board} {int(r.Year)}" for r in d.itertuples()]
+
+
+def promoted_note(df: pd.DataFrame) -> str:
+    """One-line caption for the promoted board-years in `df` ('' if none)."""
+    p = promoted(df)
+    return ("Promoted results (pass % near 99%, not comparable with other boards): " + ", ".join(p) + ".") if p else ""

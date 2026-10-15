@@ -36,7 +36,7 @@ a, b, c = st.columns(3)
 with a: cs = st.multiselect("Class", CLASSES, default=[DEFAULT_CLASS])
 with b: bs = st.multiselect("Board", sorted(df["Board"].unique()))
 with c: ys = st.multiselect("Year", sorted(df["Year"].unique()), default=[2026])
-d = df[df["Class"].isin(cs)]
+d = df[df["Class"].isin(cs)] if cs else df          # empty = all, same as Board and Year
 if bs: d = d[d["Board"].isin(bs)]
 if ys: d = d[d["Year"].isin(ys)]
 d = d.drop(columns=["Province"], errors="ignore").round(2)

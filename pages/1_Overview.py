@@ -6,7 +6,7 @@ from components.page_boot import boot, year_and_class, delta_kpi, no_data, not_p
 from components.filter_bar import render_filter_bar
 from components.kpi_card import render_kpi_row, format_compact
 from components.chart_card import chart_card
-from data.loader import load, agg, totals, prev_year, like_for_like, scope
+from data.loader import load, agg, totals, prev_year, like_for_like, scope, promoted_note
 import charts.combined_charts as C
 import charts.extra_charts as X
 def section(t): st.markdown(f"<div class=\"page-header-title\" style=\"margin:1.2rem 0 .4rem\">{t}</div>", unsafe_allow_html=True)
@@ -67,6 +67,7 @@ with left:
 with right:
     with chart_card("Top 3 Boards by Pass %", f"{cls} · highest pass rate in each year"):
         render_top_boards(df, n=3, years=(2026, 2025, 2024))
+        if promoted_note(df): st.caption(promoted_note(df))
 with chart_card("Province Snapshot", f"{cls} · {year}"):
     metric = st.pills("Metric", ["Appeared", "Pass %"], default="Appeared", key="ov_tile_metric", label_visibility="collapsed") or "Appeared"
     render_province_tiles(df, metric, year)

@@ -80,7 +80,10 @@ The app opens at `http://localhost:8501`.
 ### Known limitations
 - **11th:** no Regular vs Private and no Grade Distribution published.
 - **9th / 10th:** only a few boards publish district data.
-- **11th Mardan and Bannu 2025** are "promoted" results (pass % near 99%).
+- **Promoted results** (pass % near 99%, not comparable): 11th Mardan and Bannu 2025, 9th Peshawar 2024-2026, 9th Mardan 2025-2026. Pages flag these automatically (any board-year at 97%+).
+- **11th 2026:** only 3 boards (Abbottabad, Bannu, Kohat) have published so far.
+- **Grades** are a split of *passed* candidates. Where a gazette puts failed candidates in the last grade (10th Lahore "E", 10th Bannu 2025) the build recomputes E as Passed − (A+ … D).
+- **Subject "Appeared"** counts paper entries, not unique students (e.g. Islamiyat and Islamic Studies are merged as Islamic Education), so it can exceed the board total.
 - **Cohort Progress** is a proxy - repeaters, private candidates and board changes mean counts are not exactly the same students.
 
 ### Updating the data

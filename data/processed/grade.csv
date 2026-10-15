@@ -9,7 +9,6 @@ Class,Board,Year,Grade,Count
 10th,Bannu,2025,B,6990.0
 10th,Bannu,2025,C,4599.0
 10th,Bannu,2025,D,549.0
-10th,Bannu,2025,E,3853.0
 10th,Bannu,2026,A,9037.0
 10th,Bannu,2026,A+,7125.0
 10th,Bannu,2026,B,6958.0
@@ -53,19 +52,19 @@ Class,Board,Year,Grade,Count
 10th,Lahore,2024,B,42212.0
 10th,Lahore,2024,C,47352.0
 10th,Lahore,2024,D,20817.0
-10th,Lahore,2024,E,76671.0
+10th,Lahore,2024,E,981.0
 10th,Lahore,2025,A,29617.0
 10th,Lahore,2025,A+,31724.0
 10th,Lahore,2025,B,40751.0
 10th,Lahore,2025,C,43665.0
 10th,Lahore,2025,D,19340.0
-10th,Lahore,2025,E,88915.0
+10th,Lahore,2025,E,815.0
 10th,Lahore,2026,A,32225.0
 10th,Lahore,2026,A+,37414.0
 10th,Lahore,2026,B,44038.0
 10th,Lahore,2026,C,47418.0
 10th,Lahore,2026,D,20406.0
-10th,Lahore,2026,E,100807.0
+10th,Lahore,2026,E,685.0
 10th,Peshawar,2024,A,20448.0
 10th,Peshawar,2024,A+,22114.0
 10th,Peshawar,2024,B,20368.0
@@ -356,4 +355,3 @@ Class,Board,Year,Grade,Count
 9th,Swat,2026,B,7219.0
 9th,Swat,2026,C,3037.0
 9th,Swat,2026,D,222.0
-9th,Swat,2026,E,0.0

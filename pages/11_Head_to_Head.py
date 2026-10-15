@@ -54,7 +54,8 @@ def pick(sel, df):
 a, b = pick(A, full), pick(B, full)
 la, lb = f"A · {A[0]} {A[1]}", f"B · {B[0]} {B[1]}"
 if a.empty or b.empty:
-    st.info(f"No data for {la if a.empty else lb} with this province filter. Pick another class or year (9th: 2025-26, 10th: 2024-26, 11th: 2024-25, 12th: 2024-26).")
+    cov = "; ".join(f"{c}: " + ", ".join(str(y) for y in sorted(full[full["Class"] == c]["Year"].unique())) for c in CLASSES)
+    st.info(f"No data for {la if a.empty else lb} with this province filter. Pick another class or year (published years - {cov}).")
     st.stop()
 if same:
     common = set(a["Board"]) & set(b["Board"])
