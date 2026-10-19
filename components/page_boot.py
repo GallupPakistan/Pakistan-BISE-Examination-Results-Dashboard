@@ -7,7 +7,7 @@ from components.topbar import render_topbar
 from components.kpi_card import format_compact
 from components.filter_bar import render_filter_bar
 from components.page_header import render_page_header
-from data.loader import prev_year
+from data.loader import prev_year, load
 from types import SimpleNamespace
 from config.settings import PROVINCE_BOARD_MAP
 from components.filter_bar import filter_slot
@@ -85,11 +85,27 @@ def delta_kpi(cur, prv, fmt=format_compact, pct=False, invert=False):
     return txt, (not good if invert else good)
 
 
+PROV_NOTES = {
+    "Sindh": "Sindh is only BIEK Karachi, and only the 12th class is published (official gazette statistics). Other Sindh boards and classes publish roll-number lists only.",
+    "Federal": "Federal is a single board (FBISE), so rankings and board comparisons show one bar.",
+}
+
+
 def no_data(cls, year, df):
+    prov = st.session_state.get("g_prov", ALL_PROV)
+    who = "" if prov == ALL_PROV else f" in {prov}"
     ys = sorted(df["Year"].unique()) if len(df) else []
-    st.info(f"No {cls} class data for {year}." + (f" Available years: {', '.join(map(str, ys))}." if ys else ""))
+    msg = f"No {cls} data for {year}{who}." + (f" Years available for this selection: {', '.join(map(str, ys))}." if ys else "")
+    if prov != ALL_PROV:
+        o = load("overall"); o = o[o["Board"].isin(PROVINCE_BOARD_MAP[prov])]
+        cov = "; ".join(f"{c}: {', '.join(map(str, sorted(o[o['Class'] == c]['Year'].unique())))}" for c in CLASSES if (o["Class"] == c).any())
+        if cov: msg += f"\n\n**{prov} has results for** {cov}. Change the Year or Class filter, or pick All Provinces."
+        if prov in PROV_NOTES: msg += f"\n\n{PROV_NOTES[prov]}"
+    st.info(msg)
     st.stop()
 
 
 def not_published(cls, what):
-    st.info(f"{what} is not published for the {cls} class in the source gazettes, so there is nothing to show here.")
+    prov = st.session_state.get("g_prov", ALL_PROV)
+    extra = f" {PROV_NOTES[prov]}" if prov in PROV_NOTES else ""
+    st.info(f"{what} is not published for the {cls} class in the source gazettes, so there is nothing to show here.{extra}")
