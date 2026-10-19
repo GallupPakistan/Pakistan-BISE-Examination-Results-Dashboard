@@ -7,6 +7,8 @@ from components.kpi_card import render_kpi_row, format_compact
 from components.chart_card import chart_card
 from data.loader import load, agg, prev_year, like_for_like, promoted
 import charts.extra_charts as X
+import charts.combined_charts as CH
+from config.settings import PROVINCE_BOARD_MAP
 
 PROVS = ["Punjab", "Khyber Pakhtunkhwa", "Sindh", "Federal"]
 ACCENT = {"Punjab": "blue", "Khyber Pakhtunkhwa": "green", "Sindh": "blue", "Federal": "gold"}
@@ -18,7 +20,8 @@ def section(t):
 
 boot("Province Comparison", "Punjab vs Khyber Pakhtunkhwa vs Sindh vs Federal (FBISE): classes, gender and Regular vs Private (default: 12th class, 2026).",
      stat_label="Provinces", stat_value=str(len(PROVS)), stat_icon="map")
-F = global_filters(note="This page always compares all provinces side by side, so the Province filter does not change it. Year and Class apply (All Classes shows 12th in the headline cards).")
+F = global_filters(note="This page compares all provinces side by side. If you pick one province in the sidebar it is highlighted and its boards are shown below; the others stay visible for comparison. (All Classes shows 12th in the headline cards.)")
+SEL = F.prov if F.prov in PROVS else None
 year, cls = F.year, (F.cls if F.cls != ALL_CLASSES else "12th")
 other = prev_year(year)
 
@@ -48,7 +51,7 @@ for p in PROVS:
         if len(ll):
             f = lambda y: ll[ll["Year"] == y]["Passed"].sum() / ll[ll["Year"] == y]["Appeared"].sum() * 100
             dl = delta_kpi(f(year), f(other), pct=True)
-    cards.append(dict(icon="map", value=f"{pct:.1f}%", label=f"{p} · {cls} pass rate · {cur['Board'].nunique()} board(s)",
+    cards.append(dict(icon="map", value=f"{pct:.1f}%", label=("★ " if p == SEL else "") + f"{p} · {cls} pass rate · {cur['Board'].nunique()} board(s)",
                       delta=dl[0], delta_positive=dl[1], accent=ACCENT[p]))
 pp = agg(oc, ["Province"]).sort_values("Pass %")
 if len(pp) > 1:
@@ -57,8 +60,25 @@ if len(pp) > 1:
 render_kpi_row(cards)
 st.caption(f"Changes compare {year} with {other}, using only boards that published both years." if other else f"{year} is the first year, so there is nothing earlier to compare with.")
 
+# ---------- selected province: its boards
+if SEL:
+    section(f"Inside {SEL}")
+    sb = O[(O["Province"] == SEL) & (O["Class"] == cls)]
+    if sb[sb["Year"] == year].empty:
+        st.info(f"{SEL} has no {cls} results published for {year}. Try another class or year, or pick All Provinces.")
+    else:
+        a, b = st.columns(2)
+        with a:
+            with chart_card(f"{SEL} · Pass % by Board", f"{cls} · {year}"):
+                st.plotly_chart(CH.chart_board_pass_rate(sb, year), width="stretch")
+        with b:
+            with chart_card(f"{SEL} · Pass % Trend by Board", f"{cls} · boards with 2+ years"):
+                st.plotly_chart(CH.chart_trend_lines(sb), width="stretch")
+    if SEL == "Sindh": st.caption("Sindh is BIEK Karachi only, 12th class only.")
+    if SEL == "Federal": st.caption("Federal is a single board (FBISE).")
+
 # ---------- classes
-section("Pass Rate by Class")
+section("Pass Rate by Class" + ("  (all provinces, for comparison)" if SEL else ""))
 a, b = st.columns(2)
 with a:
     with chart_card("Pass % by Province and Class", f"{year} · all classes published"):
