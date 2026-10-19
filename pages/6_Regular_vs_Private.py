@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 from config.settings import CLASSES, CLASS_COLORS, DEFAULT_CLASS, PROVINCE_BOARD_MAP
-from components.page_boot import boot, year_and_class, delta_kpi, no_data, not_published
+from components.page_boot import boot, global_filters, in_boards, delta_kpi, no_data, not_published
 from components.filter_bar import render_filter_bar
 from components.kpi_card import render_kpi_row, format_compact
 from components.chart_card import chart_card
@@ -29,8 +29,9 @@ def one(title, sub, fig):
         st.plotly_chart(fig, width="stretch")
 
 boot("Regular vs Private", "Regular and Private candidates for a class (default 12th, 2026), then compared across classes.")
-year, cls = year_and_class("rp", title="Select Year")
-Cat = load("category"); c = Cat[Cat["Class"] == cls]
+F = global_filters()
+year, cls = F.year, F.cls
+Cat = in_boards(load("category"), F.boards); c = scope(Cat, cls)
 if c.empty: not_published(cls, "Regular vs Private data")
 if c[c["Year"] == year].empty: no_data(cls, year, c)
 cur = c[c["Year"] == year]; r = agg(cur[cur["Category"] == "Regular"], ["Category"]); p = agg(cur[cur["Category"] == "Private"], ["Category"])

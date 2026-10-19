@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 from config.settings import CLASSES, CLASS_COLORS, DEFAULT_CLASS, PROVINCE_BOARD_MAP
-from components.page_boot import boot, year_and_class, delta_kpi, no_data, not_published
+from components.page_boot import boot, global_filters, in_boards, delta_kpi, no_data, not_published
 from components.filter_bar import render_filter_bar
 from components.kpi_card import render_kpi_row, format_compact
 from components.chart_card import chart_card
@@ -29,8 +29,9 @@ def one(title, sub, fig):
         st.plotly_chart(fig, width="stretch")
 
 boot("Subject Wise", "Subject pass rates for a class (default 12th, 2026), then chosen subjects compared across classes.")
-year, cls = year_and_class("sj", title="Select Year")
-S = load("subject"); s = S[S["Class"] == cls]
+F = global_filters()
+year, cls = F.year, F.cls
+S = in_boards(load("subject"), F.boards); s = scope(S, cls)
 if s[s["Year"] == year].empty: no_data(cls, year, s)
 boards = sorted(s[s["Year"] == year]["Board"].unique())
 pick = st.multiselect("Boards (empty = all boards that publish subjects)", boards, key="sj_boards")

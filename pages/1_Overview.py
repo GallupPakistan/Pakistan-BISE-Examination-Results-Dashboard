@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 from config.settings import CLASSES, CLASS_COLORS, DEFAULT_CLASS, PROVINCE_BOARD_MAP
-from components.page_boot import boot, year_and_class, delta_kpi, no_data, not_published
+from components.page_boot import boot, global_filters, in_boards, delta_kpi, no_data, not_published
 from components.filter_bar import render_filter_bar
 from components.kpi_card import render_kpi_row, format_compact
 from components.chart_card import chart_card
@@ -22,11 +22,9 @@ from components.top_boards import render_top_boards
 from components.notes import render_important_points
 
 boot("Overview", "Results of 9th, 10th, 11th and 12th class across all BISE boards (default: 12th class, 2026).")
-year, cls = year_and_class("ov", allow_all=True)
+F = global_filters()
+year, cls, prov, boards = F.year, F.cls, F.prov, F.boards
 other = prev_year(year)
-ALL = "All Provinces"
-prov = render_filter_bar("Province", [ALL] + list(PROVINCE_BOARD_MAP), default=ALL, key="ov_prov") or ALL
-boards = [b for bs in PROVINCE_BOARD_MAP.values() for b in bs] if prov == ALL else PROVINCE_BOARD_MAP[prov]
 
 full = load("overall"); full = full[full["Board"].isin(boards)]
 df = scope(full, cls)

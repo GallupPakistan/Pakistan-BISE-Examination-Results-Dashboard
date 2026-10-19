@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 from config.settings import CLASSES, CLASS_COLORS, DEFAULT_CLASS, PROVINCE_BOARD_MAP
-from components.page_boot import boot, year_and_class, delta_kpi, no_data, not_published
+from components.page_boot import boot, global_filters, in_boards, delta_kpi, no_data, not_published
 from components.filter_bar import render_filter_bar
 from components.kpi_card import render_kpi_row, format_compact
 from components.chart_card import chart_card
@@ -29,8 +29,9 @@ def one(title, sub, fig):
         st.plotly_chart(fig, width="stretch")
 
 boot("Grade Distribution", "Grade mix of passed candidates for a class (default 12th, 2026), then compared across classes.")
-year, cls = year_and_class("gd", title="Select Year")
-GR = load("grade"); gd = GR[GR["Class"] == cls]
+F = global_filters()
+year, cls = F.year, F.cls
+GR = in_boards(load("grade"), F.boards); gd = scope(GR, cls)
 if gd.empty: not_published(cls, "Grade distribution")
 if gd[gd["Year"] == year].empty: no_data(cls, year, gd)
 cur = gd[gd["Year"] == year]; tot = cur["Count"].sum(); top = cur[cur["Grade"].isin(["A+", "A"])]["Count"].sum()

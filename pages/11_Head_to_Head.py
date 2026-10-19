@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 from config.settings import CLASSES, CLASS_COLORS, DEFAULT_CLASS, PROVINCE_BOARD_MAP
-from components.page_boot import boot, year_and_class, delta_kpi, no_data, not_published
+from components.page_boot import boot, global_filters, in_boards, delta_kpi, no_data, not_published, ALL_CLASSES, ALL_PROV
 from components.filter_bar import render_filter_bar
 from components.kpi_card import render_kpi_row, format_compact
 from components.chart_card import chart_card
@@ -33,24 +33,29 @@ boot("Head to Head", "Pick any two selections (class, year, province) and compar
      stat_label="Compare", stat_value="A vs B", stat_icon="compare_arrows")
 full = load("overall"); G = load("gender")
 YEARS_D = [2026, 2025, 2024]
+F = global_filters(note="Selection A is the sidebar filters (Year, Class, Province). Pick Selection B below.")
 st.markdown('<div class="page-header-title" style="margin:.2rem 0 .4rem">Choose the two selections</div>', unsafe_allow_html=True)
 ca, cb = st.columns(2)
-def picker(col, tag, d_cls, d_year):
-    with col:
-        st.markdown(f"**Selection {tag}**")
-        c1, c2, c3 = st.columns(3)
-        cls = c1.selectbox("Class", CLASSES, index=CLASSES.index(d_cls), key=f"h_{tag}_cls")
-        yr = c2.selectbox("Year", YEARS_D, index=YEARS_D.index(d_year), key=f"h_{tag}_yr")
-        pv = c3.selectbox("Province", ["All Provinces"] + list(PROVINCE_BOARD_MAP), key=f"h_{tag}_pv")
-    return cls, yr, pv
-A = picker(ca, "A", "12th", 2026)
-B = picker(cb, "B", "12th", 2025)
+CLS_OPTS = [ALL_CLASSES] + CLASSES
+PROV_OPTS = [ALL_PROV] + list(PROVINCE_BOARD_MAP)
+with ca:
+    st.markdown("**Selection A** (sidebar filters)")
+    st.markdown(f"{F.cls} · {F.year} · {F.prov}")
+A = (F.cls, F.year, F.prov)
+with cb:
+    st.markdown("**Selection B**")
+    c1, c2, c3 = st.columns(3)
+    _by = F.year - 1 if F.year - 1 in YEARS_D else F.year
+    B = (c1.selectbox("Class", CLS_OPTS, index=CLS_OPTS.index(F.cls), key="h_B_cls"),
+         c2.selectbox("Year", YEARS_D, index=YEARS_D.index(_by), key="h_B_yr"),
+         c3.selectbox("Province", PROV_OPTS, index=PROV_OPTS.index(F.prov), key="h_B_pv"))
 same = st.toggle("Compare only boards present in both selections (like-for-like)", value=True, key="h_same")
 
 def pick(sel, df):
     cls, yr, pv = sel
-    d = df[(df["Class"] == cls) & (df["Year"] == yr)]
-    return d if pv == "All Provinces" else d[d["Board"].isin(PROVINCE_BOARD_MAP[pv])]
+    d = df[df["Year"] == yr]
+    if cls != ALL_CLASSES: d = d[d["Class"] == cls]
+    return d if pv == ALL_PROV else d[d["Board"].isin(PROVINCE_BOARD_MAP[pv])]
 a, b = pick(A, full), pick(B, full)
 la, lb = f"A · {A[0]} {A[1]}", f"B · {B[0]} {B[1]}"
 if a.empty or b.empty:
@@ -81,7 +86,7 @@ if not ga.empty and not gb.empty:
     one("Gender Pass %", "A vs B (boards that publish gender data)", C.chart_h2h_gender(ga, gb, la, lb))
 else:
     st.caption("Gender chart skipped: gender data is not published for one of the selections.")
-cls_set = list(dict.fromkeys([A[0], B[0]]))
+cls_set = list(dict.fromkeys(CLASSES if ALL_CLASSES in (A[0], B[0]) else [A[0], B[0]]))
 one("Pass % Trend", "Classes in the comparison, all years", C.chart_class_trend(full[full["Class"].isin(cls_set)]))
 m = agg(a, ["Board"])[["Board", "Appeared", "Pass %"]].merge(agg(b, ["Board"])[["Board", "Appeared", "Pass %"]], on="Board", how="outer", suffixes=(f" {la}", f" {lb}"))
 m["Gap (A−B)"] = m[f"Pass % {la}"] - m[f"Pass % {lb}"]

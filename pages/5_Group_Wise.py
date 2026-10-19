@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 from config.settings import CLASSES, CLASS_COLORS, DEFAULT_CLASS, PROVINCE_BOARD_MAP
-from components.page_boot import boot, year_and_class, delta_kpi, no_data, not_published
+from components.page_boot import boot, global_filters, in_boards, delta_kpi, no_data, not_published
 from components.filter_bar import render_filter_bar
 from components.kpi_card import render_kpi_row, format_compact
 from components.chart_card import chart_card
@@ -29,8 +29,9 @@ def one(title, sub, fig):
         st.plotly_chart(fig, width="stretch")
 
 boot("Group Wise", "Pass rate by study group for a class (default 12th, 2026), then streams compared across classes.")
-year, cls = year_and_class("gp", title="Select Year")
-G = load("group"); g = G[G["Class"] == cls]
+F = global_filters()
+year, cls = F.year, F.cls
+G = in_boards(load("group"), F.boards); g = scope(G, cls)
 if g.empty: not_published(cls, "Group-wise data"); 
 if g[g["Year"] == year].empty: no_data(cls, year, g)
 cur = agg(g[g["Year"] == year], ["Group"]).sort_values("Pass %")

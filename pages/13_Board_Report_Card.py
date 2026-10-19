@@ -3,7 +3,8 @@ import streamlit as st
 import pandas as pd
 from html import escape
 from config.settings import CLASS_COLORS
-from components.page_boot import boot
+from components.page_boot import boot, global_filters
+from config.settings import PROVINCE_BOARD_MAP
 from components.page_header import render_page_header
 from components.filter_bar import render_filter_bar
 from components.kpi_card import render_kpi_row, format_compact
@@ -16,8 +17,11 @@ boards = board_list()
 boot("Board Report Card", "One-page report for a board across 9th, 10th, 11th and 12th: rank, 3-year trend, best and weakest areas, with PDF download.",
      stat_label="Boards", stat_value=str(len(boards)), stat_icon="assignment")
 
-year = render_page_header("Select Year to View Results", year_options=[2026, 2025, 2024], year_default=2026, key="rc_year")
-board = render_filter_bar("Board", boards, default="Lahore" if "Lahore" in boards else boards[0], key="rc_board") or "Lahore"
+F = global_filters(note="A report always covers all four classes, so the Class filter does not change it. Year picks the report year; Province limits the board list.")
+year = F.year
+pboards = [b for b in boards if b in F.boards] or boards
+board = render_filter_bar("Board", pboards, default="Lahore" if "Lahore" in pboards else pboards[0], key="rc_board") or pboards[0]
+if board not in pboards: board = pboards[0]
 rep = board_report(board, year)
 cl = rep["classes"]
 if not cl:

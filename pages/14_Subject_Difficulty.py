@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 from config.settings import CLASSES, CLASS_COLORS
-from components.page_boot import boot, no_data
+from components.page_boot import boot, no_data, global_filters, in_boards
 from components.page_header import render_page_header
 from components.kpi_card import render_kpi_row
 from components.chart_card import chart_card
@@ -21,8 +21,9 @@ _cov = load("subject").groupby(["Year", "Class"])["Board"].nunique().unstack()
 st.caption("Difficulty = Fail % (100 − Pass %). Higher means harder. Only boards that publish subject results are included. "
            "Boards with subject data: " + " · ".join(f"{y}: " + ", ".join(f"{c} {int(r[c])}" for c in CLASSES if c in r and r[c] == r[c])
                                                       for y, r in _cov.sort_index(ascending=False).iterrows()) +
-           ". Default is 2025, where every class has a good number of boards.")
-year = render_page_header("Select Year", year_options=[2026, 2025, 2024], year_default=2025, key="sd_year")
+           ". 2025 has the most boards for every class.")
+F = global_filters(note="This page compares all four classes, so the Class filter does not change it. Year and Province apply.")
+year = F.year
 
 c1, c2 = st.columns([1.2, 1])
 with c1:
@@ -32,7 +33,7 @@ with c2:
     like = st.toggle("Like-for-like across classes (same boards in every class)", value=True, key="sd_like",
                      help="Applies to the class-to-class section. Different boards publish different classes, which can distort comparisons.")
 
-S = load("subject"); S = S[S["Year"] == year]
+S = in_boards(load("subject"), F.boards); S = S[S["Year"] == year]
 if S.empty: no_data("any", year, S)
 S = agg(S.assign(Subject=S["Subject"].map(unify)), ["Class", "Board", "Subject"])
 have = [c for c in CLASSES if c in S["Class"].unique()]

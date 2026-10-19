@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 from config.settings import CLASSES, PROVINCE_BOARD_MAP
-from components.page_boot import boot, year_and_class, delta_kpi, no_data, not_published
+from components.page_boot import boot, global_filters, delta_kpi, no_data, not_published, ALL_CLASSES
 from components.kpi_card import render_kpi_row, format_compact
 from components.chart_card import chart_card
 from data.loader import load, agg, prev_year, like_for_like, promoted
@@ -18,7 +18,8 @@ def section(t):
 
 boot("Province Comparison", "Punjab vs Khyber Pakhtunkhwa vs Sindh vs Federal (FBISE): classes, gender and Regular vs Private (default: 12th class, 2026).",
      stat_label="Provinces", stat_value=str(len(PROVS)), stat_icon="map")
-year, cls = year_and_class("pv", title="Select Year to View Results")
+F = global_filters(note="This page always compares all provinces side by side, so the Province filter does not change it. Year and Class apply (All Classes shows 12th in the headline cards).")
+year, cls = F.year, (F.cls if F.cls != ALL_CLASSES else "12th")
 other = prev_year(year)
 
 O = load("overall"); O = O[O["Province"].isin(PROVS)]

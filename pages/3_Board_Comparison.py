@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 from config.settings import CLASSES, CLASS_COLORS, DEFAULT_CLASS, PROVINCE_BOARD_MAP
-from components.page_boot import boot, year_and_class, delta_kpi, no_data, not_published
+from components.page_boot import boot, global_filters, in_boards, delta_kpi, no_data, not_published
 from components.filter_bar import render_filter_bar
 from components.kpi_card import render_kpi_row, format_compact
 from components.chart_card import chart_card
@@ -31,10 +31,11 @@ def one(title, sub, fig):
 
 boot("Board Comparison", "Rank BISE boards by pass rate for a class (default 12th, 2026), then compare across all classes.",
      stat_label="BISE Boards", stat_value=str(load("overall")["Board"].nunique()), stat_icon="account_balance")
-year, cls = year_and_class("bc", title="Select Year")
+F = global_filters()
+year, cls = F.year, F.cls
 other = prev_year(year)
-full = load("overall")
-d = full[full["Class"] == cls]; cur = d[d["Year"] == year]
+full = in_boards(load("overall"), F.boards)
+d = scope(full, cls); cur = d[d["Year"] == year]
 if cur.empty: no_data(cls, year, d)
 t = totals(cur); a = agg(cur, ["Board"]).sort_values("Pass %"); best, worst = a.iloc[-1], a.iloc[0]
 render_kpi_row([
@@ -55,6 +56,7 @@ one("Ranking Race", f"{cls} · press Play to watch the boards re-order by pass %
 if promoted_note(cur): st.caption(promoted_note(cur) + " They sit far from the rest.")
 section("Compare All 4 Classes")
 boards = st.multiselect("Boards (empty = all)", sorted(full["Board"].unique()), key="bc_boards")
+boards = [b for b in boards if b in set(full["Board"])]
 one("Pass % by Board and Class", f"{year}", C.chart_board_by_class(full, year, boards or None))
 sub = full[full["Board"].isin(boards)] if boards else full
 one("Pass % Heatmap · Board × Class", f"{year}", C.chart_heatmap(sub, year))

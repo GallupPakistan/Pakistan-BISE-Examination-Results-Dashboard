@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 from config.settings import CLASSES, CLASS_COLORS, DEFAULT_CLASS, PROVINCE_BOARD_MAP
-from components.page_boot import boot, year_and_class, delta_kpi, no_data, not_published
+from components.page_boot import boot, global_filters, in_boards, delta_kpi, no_data, not_published
 from components.filter_bar import render_filter_bar
 from components.kpi_card import render_kpi_row, format_compact
 from components.chart_card import chart_card
@@ -30,15 +30,14 @@ def one(title, sub, fig):
 
 from data.loader import KINDS
 boot("Data Table", "Every table behind the charts, filterable, with CSV download.", stat_label="Tables", stat_value=str(len(KINDS)), stat_icon="table_chart")
+F = global_filters()
 kind = st.selectbox("Table", KINDS, format_func=lambda k: k.title())
 df = load(kind)
-a, b, c = st.columns(3)
-with a: cs = st.multiselect("Class", CLASSES, default=[DEFAULT_CLASS])
-with b: bs = st.multiselect("Board", sorted(df["Board"].unique()))
-with c: ys = st.multiselect("Year", sorted(df["Year"].unique()), default=[2026])
-d = df[df["Class"].isin(cs)] if cs else df          # empty = all, same as Board and Year
+d = in_boards(scope(df, F.cls), F.boards)
+d = d[d["Year"] == F.year]
+bs = st.multiselect("Board (empty = all boards in the filters)", sorted(d["Board"].unique()))
 if bs: d = d[d["Board"].isin(bs)]
-if ys: d = d[d["Year"].isin(ys)]
+st.caption(f"Showing {F.cls} · {F.year} · {F.prov}. Change them with the sidebar filters.")
 d = d.drop(columns=["Province"], errors="ignore").round(2)
 st.caption(f"{len(d):,} rows")
 st.dataframe(d, width="stretch", hide_index=True)

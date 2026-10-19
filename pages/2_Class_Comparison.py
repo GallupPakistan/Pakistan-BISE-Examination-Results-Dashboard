@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 from config.settings import CLASSES, CLASS_COLORS, DEFAULT_CLASS, PROVINCE_BOARD_MAP
-from components.page_boot import boot, year_and_class, delta_kpi, no_data, not_published
+from components.page_boot import boot, global_filters, in_boards, delta_kpi, no_data, not_published
 from components.filter_bar import render_filter_bar
 from components.kpi_card import render_kpi_row, format_compact
 from components.chart_card import chart_card
@@ -30,13 +30,10 @@ def one(title, sub, fig):
         st.plotly_chart(fig, width="stretch")
 
 boot("Class Comparison", "Compare 9th, 10th, 11th and 12th class results: classes, boards, provinces, years.")
-from components.page_header import render_page_header
-from config.settings import DEFAULT_YEAR
-year = render_page_header("Select Year to Compare Classes", year_options=[2026, 2025, 2024], year_default=DEFAULT_YEAR, key="cc_year")
+F = global_filters(note="This page compares all four classes, so the Class filter only sets the class in the 'Board Rank by Year' chart. Year and Province apply to everything.")
+year, cls, prov = F.year, F.cls, F.prov
 other = prev_year(year)
-prov = render_filter_bar("Province", ["All Provinces"] + list(PROVINCE_BOARD_MAP), default="All Provinces", key="cc_prov") or "All Provinces"
-full = load("overall")
-if prov != "All Provinces": full = full[full["Board"].isin(PROVINCE_BOARD_MAP[prov])]
+full = in_boards(load("overall"), F.boards)
 cur = full[full["Year"] == year]
 if cur.empty: no_data("any", year, full)
 
@@ -68,7 +65,7 @@ one("Board-wise Pass % by Class", f"{year}", C.chart_board_by_class(full, year))
 two("Spread of Board Pass Rates", f"{year} · each dot is a board", C.chart_class_box(full, year),
     "Board Size vs Pass %", f"{year} · bubble = candidates", C.chart_class_bubble(full, year))
 one("Province-wise Pass % by Class", f"{year}", C.chart_province_by_class(full, year))
-g = load("gender"); g = g[g["Board"].isin(full["Board"].unique())]
+g = in_boards(load("gender"), F.boards)
 if not g[g["Year"] == year].empty:
     two("Gender Pass % by Class", f"{year}", C.chart_gender_by_class(g, year), "Female-Male Gap by Class", "All years", C.chart_gender_gap_by_class(g))
 
@@ -76,7 +73,8 @@ section("Board Ranking Across Classes")
 rt = C.rank_table(full, year)
 two("Board Rank by Class", f"{year} · rank 1 = best pass % in that class", C.chart_rank_bump_classes(full, year),
     "Board Consistency", "average rank across classes (colour = rank spread)", C.chart_rank_consistency(rt))
-cls_r = st.selectbox("Rank movement over years for class", CLASSES, index=CLASSES.index("12th"), key="cc_rank_cls")
+cls_r = cls if cls in CLASSES else "12th"
+st.caption(f"Rank movement shown for {cls_r} (change it with the Class filter).")
 one(f"{cls_r} · Board Rank by Year", "rank 1 = best pass % that year", C.chart_rank_bump_years(full, cls_r))
 with chart_card("Ranking Table", f"{year} · rank of every board in each class"):
     st.dataframe(rt, width="stretch", hide_index=True)

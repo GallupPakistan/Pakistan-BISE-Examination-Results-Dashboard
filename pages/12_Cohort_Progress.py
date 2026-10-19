@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 from config.settings import CLASSES, CLASS_COLORS, DEFAULT_CLASS, PROVINCE_BOARD_MAP
-from components.page_boot import boot, year_and_class, delta_kpi, no_data, not_published
+from components.page_boot import boot, global_filters, in_boards, delta_kpi, no_data, not_published, ALL_CLASSES, ALL_PROV
 from components.filter_bar import render_filter_bar
 from components.kpi_card import render_kpi_row, format_compact
 from components.chart_card import chart_card
@@ -32,11 +32,16 @@ def one(title, sub, fig):
 import plotly.express as px
 from data.cohort import chains, funnel, transition
 
-full = load("overall")
-ch = chains(full)
 boot("Cohort Progress", "Follow a batch of students from one class to the next: how many pass, how many come back, how results change.",
-     stat_label="Cohorts", stat_value=str(len(ch)), stat_icon="route")
-label = st.selectbox("Cohort (batch of students)", list(ch), index=list(ch).index(next((k for k in ch if k.endswith("12th 2026")), list(ch)[0])), key="co_chain")
+     stat_label="Cohorts", stat_value=str(len(chains(load("overall")))), stat_icon="route")
+F = global_filters(note="Year and Class choose which cohort is opened first (the batch that ends in that class and year); Province limits the boards.")
+full = in_boards(load("overall"), F.boards)
+if full.empty: st.info("No data for this province."); st.stop()
+ch = chains(full)
+if not ch: st.info("No cohort can be followed with this province's data (a cohort needs the same boards in two consecutive classes and years)."); st.stop()
+_end = f"{F.cls if F.cls != ALL_CLASSES else '12th'} {F.year}"
+_idx = next((i for i, k in enumerate(ch) if k.endswith(_end)), next((i for i, k in enumerate(ch) if k.endswith(f" {F.year}")), 0))
+label = st.selectbox("Cohort (batch of students)", list(ch), index=_idx)
 steps = ch[label]
 f = funnel(full, steps)
 st.caption(f"Same {int(f['Boards'].iloc[0])} boards in every step, so the steps are comparable. Assumes the batch sitting class N in year Y sits class N+1 in year Y+1. "
